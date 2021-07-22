@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "https://cosmwasm.github.io/code-explorer/static/css/main.d0f9fac1.chunk.css",
-    "main.js": "https://cosmwasm.github.io/code-explorer/static/js/main.6840514b.chunk.js",
-    "main.js.map": "https://cosmwasm.github.io/code-explorer/static/js/main.6840514b.chunk.js.map",
-    "runtime-main.js": "https://cosmwasm.github.io/code-explorer/static/js/runtime-main.27439902.js",
-    "runtime-main.js.map": "https://cosmwasm.github.io/code-explorer/static/js/runtime-main.27439902.js.map",
-    "static/css/2.8ba42a9a.chunk.css": "https://cosmwasm.github.io/code-explorer/static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.e7fa61ab.chunk.js": "https://cosmwasm.github.io/code-explorer/static/js/2.e7fa61ab.chunk.js",
-    "static/js/2.e7fa61ab.chunk.js.map": "https://cosmwasm.github.io/code-explorer/static/js/2.e7fa61ab.chunk.js.map",
-    "index.html": "https://cosmwasm.github.io/code-explorer/index.html",
-    "precache-manifest.2ca5c934d75e2bd417c22574bebbbea2.js": "https://cosmwasm.github.io/code-explorer/precache-manifest.2ca5c934d75e2bd417c22574bebbbea2.js",
-    "service-worker.js": "https://cosmwasm.github.io/code-explorer/service-worker.js",
-    "static/css/2.8ba42a9a.chunk.css.map": "https://cosmwasm.github.io/code-explorer/static/css/2.8ba42a9a.chunk.css.map",
-    "static/css/main.d0f9fac1.chunk.css.map": "https://cosmwasm.github.io/code-explorer/static/css/main.d0f9fac1.chunk.css.map",
-    "static/js/2.e7fa61ab.chunk.js.LICENSE.txt": "https://cosmwasm.github.io/code-explorer/static/js/2.e7fa61ab.chunk.js.LICENSE.txt",
-    "static/media/index.css": "https://cosmwasm.github.io/code-explorer/static/media/background.7435b81a.jpg"
+    "main.css": "https://giansalex.github.io/juno-codes/static/css/main.502e23d7.chunk.css",
+    "main.js": "https://giansalex.github.io/juno-codes/static/js/main.5f0a0a4f.chunk.js",
+    "main.js.map": "https://giansalex.github.io/juno-codes/static/js/main.5f0a0a4f.chunk.js.map",
+    "runtime-main.js": "https://giansalex.github.io/juno-codes/static/js/runtime-main.7b445e30.js",
+    "runtime-main.js.map": "https://giansalex.github.io/juno-codes/static/js/runtime-main.7b445e30.js.map",
+    "static/css/2.8ba42a9a.chunk.css": "https://giansalex.github.io/juno-codes/static/css/2.8ba42a9a.chunk.css",
+    "static/js/2.873f3f6c.chunk.js": "https://giansalex.github.io/juno-codes/static/js/2.873f3f6c.chunk.js",
+    "static/js/2.873f3f6c.chunk.js.map": "https://giansalex.github.io/juno-codes/static/js/2.873f3f6c.chunk.js.map",
+    "index.html": "https://giansalex.github.io/juno-codes/index.html",
+    "precache-manifest.ff8066127826b99eea4119483511d282.js": "https://giansalex.github.io/juno-codes/precache-manifest.ff8066127826b99eea4119483511d282.js",
+    "service-worker.js": "https://giansalex.github.io/juno-codes/service-worker.js",
+    "static/css/2.8ba42a9a.chunk.css.map": "https://giansalex.github.io/juno-codes/static/css/2.8ba42a9a.chunk.css.map",
+    "static/css/main.502e23d7.chunk.css.map": "https://giansalex.github.io/juno-codes/static/css/main.502e23d7.chunk.css.map",
+    "static/js/2.873f3f6c.chunk.js.LICENSE.txt": "https://giansalex.github.io/juno-codes/static/js/2.873f3f6c.chunk.js.LICENSE.txt",
+    "static/media/index.css": "https://giansalex.github.io/juno-codes/static/media/background.7435b81a.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.27439902.js",
+    "static/js/runtime-main.7b445e30.js",
     "static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.e7fa61ab.chunk.js",
-    "static/css/main.d0f9fac1.chunk.css",
-    "static/js/main.6840514b.chunk.js"
+    "static/js/2.873f3f6c.chunk.js",
+    "static/css/main.502e23d7.chunk.css",
+    "static/js/main.5f0a0a4f.chunk.js"
   ]
 }
