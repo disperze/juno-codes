@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "https://blueprints.juno.giansalex.dev/static/css/main.88748dc2.chunk.css",
-    "main.js": "https://blueprints.juno.giansalex.dev/static/js/main.acf69af9.chunk.js",
-    "main.js.map": "https://blueprints.juno.giansalex.dev/static/js/main.acf69af9.chunk.js.map",
+    "main.css": "https://blueprints.juno.giansalex.dev/static/css/main.a04da43e.chunk.css",
+    "main.js": "https://blueprints.juno.giansalex.dev/static/js/main.ee6ad4c4.chunk.js",
+    "main.js.map": "https://blueprints.juno.giansalex.dev/static/js/main.ee6ad4c4.chunk.js.map",
     "runtime-main.js": "https://blueprints.juno.giansalex.dev/static/js/runtime-main.f8db958a.js",
     "runtime-main.js.map": "https://blueprints.juno.giansalex.dev/static/js/runtime-main.f8db958a.js.map",
     "static/css/2.8ba42a9a.chunk.css": "https://blueprints.juno.giansalex.dev/static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.abbcfe92.chunk.js": "https://blueprints.juno.giansalex.dev/static/js/2.abbcfe92.chunk.js",
-    "static/js/2.abbcfe92.chunk.js.map": "https://blueprints.juno.giansalex.dev/static/js/2.abbcfe92.chunk.js.map",
+    "static/js/2.153e64de.chunk.js": "https://blueprints.juno.giansalex.dev/static/js/2.153e64de.chunk.js",
+    "static/js/2.153e64de.chunk.js.map": "https://blueprints.juno.giansalex.dev/static/js/2.153e64de.chunk.js.map",
     "index.html": "https://blueprints.juno.giansalex.dev/index.html",
-    "precache-manifest.d2251b159aa603cf91e89fa7c0550485.js": "https://blueprints.juno.giansalex.dev/precache-manifest.d2251b159aa603cf91e89fa7c0550485.js",
+    "precache-manifest.bcdc2c7e5a73ee76702472015ff9f1f0.js": "https://blueprints.juno.giansalex.dev/precache-manifest.bcdc2c7e5a73ee76702472015ff9f1f0.js",
     "service-worker.js": "https://blueprints.juno.giansalex.dev/service-worker.js",
     "static/css/2.8ba42a9a.chunk.css.map": "https://blueprints.juno.giansalex.dev/static/css/2.8ba42a9a.chunk.css.map",
-    "static/css/main.88748dc2.chunk.css.map": "https://blueprints.juno.giansalex.dev/static/css/main.88748dc2.chunk.css.map",
-    "static/js/2.abbcfe92.chunk.js.LICENSE.txt": "https://blueprints.juno.giansalex.dev/static/js/2.abbcfe92.chunk.js.LICENSE.txt",
+    "static/css/main.a04da43e.chunk.css.map": "https://blueprints.juno.giansalex.dev/static/css/main.a04da43e.chunk.css.map",
+    "static/js/2.153e64de.chunk.js.LICENSE.txt": "https://blueprints.juno.giansalex.dev/static/js/2.153e64de.chunk.js.LICENSE.txt",
     "static/media/index.css": "https://blueprints.juno.giansalex.dev/static/media/background.7435b81a.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.f8db958a.js",
     "static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.abbcfe92.chunk.js",
-    "static/css/main.88748dc2.chunk.css",
-    "static/js/main.acf69af9.chunk.js"
+    "static/js/2.153e64de.chunk.js",
+    "static/css/main.a04da43e.chunk.css",
+    "static/js/main.ee6ad4c4.chunk.js"
   ]
 }
