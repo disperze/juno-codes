@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c106ca2a0db4e0534edb25bdc5676a00",
+    "revision": "c841503097accf0842b3d7d17d175d16",
     "url": "https://blueprints.juno.giansalex.dev/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://blueprints.juno.giansalex.dev/static/css/2.8ba42a9a.chunk.css"
   },
   {
-    "revision": "1b76fa7e82de76726a9f",
+    "revision": "01846a1ecb4db8dcfd67",
     "url": "https://blueprints.juno.giansalex.dev/static/css/main.a04da43e.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://blueprints.juno.giansalex.dev/static/js/2.7fc4accb.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1b76fa7e82de76726a9f",
-    "url": "https://blueprints.juno.giansalex.dev/static/js/main.4a972895.chunk.js"
+    "revision": "01846a1ecb4db8dcfd67",
+    "url": "https://blueprints.juno.giansalex.dev/static/js/main.dc547782.chunk.js"
   },
   {
     "revision": "1f97f92b1820f1a98e13",

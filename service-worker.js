@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://blueprints.juno.giansalex.dev/precache-manifest.ce49bec3c34df9b820a67a8af3c15832.js"
+  "https://blueprints.juno.giansalex.dev/precache-manifest.47fe6c73520faacddd82e57edc332f83.js"
 );
 
 self.addEventListener('message', (event) => {
