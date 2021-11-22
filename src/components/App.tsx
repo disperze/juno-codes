@@ -22,6 +22,7 @@ import {
   msgStoreCodeTypeUrl,
 } from "../ui-utils/txs";
 import { FlexibleRouter } from "./FlexibleRouter";
+import { DashboardPage } from "../pages/contract/DashboardPage";
 
 const { nodeUrls } = settings.backend;
 const typeRegistry = new Registry([
@@ -64,6 +65,7 @@ export function App(): JSX.Element {
     <ClientContext.Provider value={contextValue}>
       <FlexibleRouter type={settings.deployment.routerType}>
         <Switch>
+          <Route path="/" component={DashboardPage} />
           <Route exact path="/codes" component={CodesPage} />
           <Route path="/codes/new" component={NewCodePage} />
           <Route path="/codes/:codeId" component={CodePage} />
