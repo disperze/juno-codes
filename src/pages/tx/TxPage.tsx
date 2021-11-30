@@ -123,7 +123,7 @@ export function TxPage(): JSX.Element {
             ) : details === undefined ? (
               <p>Transaction not found</p>
             ) : (
-              <TxInfo tx={Tx.decode(details.tx)} />
+              <TxInfo tx={details} />
             )}
           </div>
         </div>
