@@ -1,26 +1,21 @@
 {
   "files": {
-    "main.css": "https://blueprints.juno.giansalex.dev//static/css/main.e96feb9f.chunk.css",
-    "main.js": "https://blueprints.juno.giansalex.dev//static/js/main.00d1d71a.chunk.js",
-    "main.js.map": "https://blueprints.juno.giansalex.dev//static/js/main.00d1d71a.chunk.js.map",
-    "runtime-main.js": "https://blueprints.juno.giansalex.dev//static/js/runtime-main.d2d4258c.js",
-    "runtime-main.js.map": "https://blueprints.juno.giansalex.dev//static/js/runtime-main.d2d4258c.js.map",
-    "static/css/2.8ba42a9a.chunk.css": "https://blueprints.juno.giansalex.dev//static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.6b0f74b2.chunk.js": "https://blueprints.juno.giansalex.dev//static/js/2.6b0f74b2.chunk.js",
-    "static/js/2.6b0f74b2.chunk.js.map": "https://blueprints.juno.giansalex.dev//static/js/2.6b0f74b2.chunk.js.map",
-    "index.html": "https://blueprints.juno.giansalex.dev//index.html",
-    "precache-manifest.8134885ead2fe08aa7c1d79d70ae1193.js": "https://blueprints.juno.giansalex.dev//precache-manifest.8134885ead2fe08aa7c1d79d70ae1193.js",
-    "service-worker.js": "https://blueprints.juno.giansalex.dev//service-worker.js",
-    "static/css/2.8ba42a9a.chunk.css.map": "https://blueprints.juno.giansalex.dev//static/css/2.8ba42a9a.chunk.css.map",
-    "static/css/main.e96feb9f.chunk.css.map": "https://blueprints.juno.giansalex.dev//static/css/main.e96feb9f.chunk.css.map",
-    "static/js/2.6b0f74b2.chunk.js.LICENSE.txt": "https://blueprints.juno.giansalex.dev//static/js/2.6b0f74b2.chunk.js.LICENSE.txt",
-    "static/media/index.css": "https://blueprints.juno.giansalex.dev//static/media/background.7435b81a.jpg"
+    "main.css": "/static/css/main.9e866472.chunk.css",
+    "main.js": "/static/js/main.626c9549.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.9ed24438.js",
+    "static/css/2.10a4106b.chunk.css": "/static/css/2.10a4106b.chunk.css",
+    "static/js/2.0a14d0cc.chunk.js": "/static/js/2.0a14d0cc.chunk.js",
+    "index.html": "/index.html",
+    "precache-manifest.ff1e04bddcd1f4410f569e30602a13c5.js": "/precache-manifest.ff1e04bddcd1f4410f569e30602a13c5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/js/2.0a14d0cc.chunk.js.LICENSE.txt": "/static/js/2.0a14d0cc.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/background.7435b81a.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.d2d4258c.js",
-    "static/css/2.8ba42a9a.chunk.css",
-    "static/js/2.6b0f74b2.chunk.js",
-    "static/css/main.e96feb9f.chunk.css",
-    "static/js/main.00d1d71a.chunk.js"
+    "static/js/runtime-main.9ed24438.js",
+    "static/css/2.10a4106b.chunk.css",
+    "static/js/2.0a14d0cc.chunk.js",
+    "static/css/main.9e866472.chunk.css",
+    "static/js/main.626c9549.chunk.js"
   ]
 }
