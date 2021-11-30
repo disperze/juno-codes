@@ -12,7 +12,7 @@
     "start-musselnet": "REACT_APP_BACKEND=musselnet yarn base-start",
     "start-pebblenet": "REACT_APP_BACKEND=pebblenet yarn base-start",
     "start-uninet": "REACT_APP_BACKEND=uninet yarn base-start",
-    "start": "yarn start-pebblenet",
+    "start": "yarn start-uninet",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint -c .eslintrc.js --max-warnings 0 'src/**/*.ts{,x}'",
