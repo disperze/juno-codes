@@ -5,10 +5,12 @@ import { Header } from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import { contractService } from "../../services/index"
 import { Contract } from "../../types/contract";
+import { printableBalance } from "../../ui-utils";
 import { isErrorState, isLoadingState } from "../../ui-utils/states";
 import ContractTable from "./ContractTable";
+import { settings } from "../../settings";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 15;
 
 export function DashboardPage(): JSX.Element {
   const [contract, setContract] = React.useState<Contract>({
@@ -27,6 +29,7 @@ export function DashboardPage(): JSX.Element {
 
   const loadContracts = React.useCallback(async (offset: number) => {
     const contracts = await contractService.getContracts(PAGE_SIZE, offset);
+    console.log(contracts);
     setContract(contracts);
   }, []);
 
@@ -58,7 +61,7 @@ export function DashboardPage(): JSX.Element {
               <CardInfo title="Fees used"
                 iconName="calendar"
                 color="success"
-                value={`${contract.contracts_aggregate.aggregate.sum.fees}`} />
+                value={`${printableBalance([{amount: contract.contracts_aggregate.aggregate.sum.fees.toString(), denom: settings.backend.denominations[0]}])}`} />
 
               <CardInfo title="Gas used"
                 iconName="clipboard"

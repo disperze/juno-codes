@@ -1,15 +1,13 @@
 import React from "react"
 import { ContractLink } from "../../components/ContractLink"
 import {  ContractElement } from "../../types/contract"
-import { ellideMiddle } from "../../ui-utils"
+import { ellideMiddle, printableBalance } from "../../ui-utils"
+import { settings } from "../../settings";
 
 interface Props {
     readonly contracts: ContractElement[],
     readonly maxLength?: number | null;
 }
-
-
-
 
 export default function ContractTable({ contracts, maxLength = 20 }: Props): JSX.Element {
 
@@ -34,7 +32,7 @@ export default function ContractTable({ contracts, maxLength = 20 }: Props): JSX
                         <td>{ellideMiddle(creator, maxLength || 99999)}</td>
                         <td>{tx}</td>
                         <td>{gas}</td>
-                        <td>  {fees ? fees / 1000000 : 0} JUNO</td>
+                        <td>{printableBalance([{amount: fees.toString(), denom: settings.backend.denominations[0]}])}</td>
                     </tr>
                 ))}
             </tbody>
