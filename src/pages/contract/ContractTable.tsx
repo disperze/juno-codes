@@ -1,10 +1,10 @@
 import React from "react"
 import { ContractLink } from "../../components/ContractLink"
-import { Contract } from "../../types/contract"
+import {  ContractElement } from "../../types/contract"
 import { ellideMiddle } from "../../ui-utils"
 
 interface Props {
-    readonly contracts: readonly Contract[],
+    readonly contracts: ContractElement[],
     readonly maxLength?: number | null;
 }
 
