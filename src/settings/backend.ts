@@ -8,6 +8,7 @@ export interface BackendSettings {
   readonly addressPrefix: string;
   readonly gasPrice: GasPrice;
   readonly keplrChainInfo?: any;
+  readonly contractsUrl?: string;
 }
 
 const devnetStargateSettings: BackendSettings = {
@@ -111,7 +112,9 @@ const uniSettings: BackendSettings = {
     ],
     features: ["stargate", "ibc-transfer", "cosmwasm", "no-legacy-stdTx"],
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
+    
   },
+  contractsUrl: "https://graph.juno.giansalex.dev/api/rest/page"
 };
 
 const knownBackends: Partial<Record<string, BackendSettings>> = {
