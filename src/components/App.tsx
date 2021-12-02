@@ -65,14 +65,14 @@ export function App(): JSX.Element {
     <ClientContext.Provider value={contextValue}>
       <FlexibleRouter type={settings.deployment.routerType}>
         <Switch>
-          <Route path="/" component={DashboardPage} />
           <Route exact path="/codes" component={CodesPage} />
           <Route path="/codes/new" component={NewCodePage} />
           <Route path="/codes/:codeId" component={CodePage} />
           <Route path="/contracts/:contractAddress" component={ContractPage} />
           <Route path="/transactions/:txId" component={TxPage} />
           <Route path="/accounts/:address" component={AccountPage} />
-          <Route component={() => <Redirect to="/codes" />} />
+          <Route path="/" component={DashboardPage} />
+          <Route component={() => <Redirect to="/" />} />
         </Switch>
       </FlexibleRouter>
     </ClientContext.Provider>
