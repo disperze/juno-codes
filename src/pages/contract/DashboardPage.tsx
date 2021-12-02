@@ -6,31 +6,22 @@ import Pagination from "../../components/Pagination";
 import { contractService } from "../../services/index"
 import { Contract } from "../../types/contract";
 import { printableBalance } from "../../ui-utils";
-import { isErrorState, isLoadingState } from "../../ui-utils/states";
+import { isErrorState, isLoadingState, ErrorState, errorState, LoadingState, loadingState } from "../../ui-utils/states";
 import ContractTable from "./ContractTable";
 import { settings } from "../../settings";
 
 const PAGE_SIZE = 15;
 
 export function DashboardPage(): JSX.Element {
-  const [contract, setContract] = React.useState<Contract>({
-    contracts: [],
-    contracts_aggregate: {
-      aggregate: {
-        count: 0,
-        sum: {
-          gas: 0,
-          fees: 0,
-          tx: 0
-        }
-      },
-    }
-  });
+  const [contract, setContract] = React.useState<Contract | ErrorState | LoadingState>(loadingState);
 
   const loadContracts = React.useCallback(async (offset: number) => {
-    const contracts = await contractService.getContracts(PAGE_SIZE, offset);
-    console.log(contracts);
-    setContract(contracts);
+    try {
+      const contracts = await contractService.getContracts(PAGE_SIZE, offset);
+      setContract(contracts);
+    } catch {
+      setContract(errorState);
+    }
   }, []);
 
   React.useEffect(() => {
