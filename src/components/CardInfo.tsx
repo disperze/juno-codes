@@ -20,7 +20,7 @@ export default function CardInfo({ value, title, iconName, color }: Props): JSX.
         setCardClass(`card border-left-${color} shadow h-100 py-2`);
         setIcon(`fas fa-${iconName} fa-2x text-gray-300`);
         setTitleClass(`text-xs font-weight-bold text-${color} text-uppercase mb-1`)
-    }, [setCardClass, setIcon, setTitleClass]);
+    }, [color, iconName]);
 
 
     return (

@@ -5,11 +5,13 @@ import { Header } from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import { contractService } from "../../services/index"
 import { Contract } from "../../types/contract";
-import { ErrorState, errorState, isErrorState, isLoadingState } from "../../ui-utils/states";
+import { isErrorState, isLoadingState } from "../../ui-utils/states";
 import ContractTable from "./ContractTable";
 
+const PAGE_SIZE = 10;
+
 export function DashboardPage(): JSX.Element {
-  const [contract, setContract] = React.useState<Contract | ErrorState>({
+  const [contract, setContract] = React.useState<Contract>({
     contracts: [],
     contracts_aggregate: {
       aggregate: {
@@ -21,14 +23,21 @@ export function DashboardPage(): JSX.Element {
         }
       },
     }
-  })
+  });
+
+  const loadContracts = React.useCallback(async (offset: number) => {
+    const contracts = await contractService.getContracts(PAGE_SIZE, offset);
+    setContract(contracts);
+  }, []);
 
   React.useEffect(() => {
-    contractService
-      .getContracts()
-      .then(setContract)
-      .catch(() => setContract(errorState));
-  }, [contractService]);
+    loadContracts(0)
+  }, [loadContracts]);
+
+  const handlePage = async (page: number) => {
+    const offset = (page - 1) * PAGE_SIZE;
+    await loadContracts(offset)
+  }
 
   return (
     <div className="page">
@@ -78,7 +87,7 @@ export function DashboardPage(): JSX.Element {
                   ) : contract.contracts.length !== 0 ? (
                     <div>
                       <ContractTable contracts={contract.contracts} />
-                      <Pagination totalItems={contract.contracts_aggregate.aggregate.count} pageSize={10} />
+                      <Pagination totalItems={contract.contracts_aggregate.aggregate.count} step={PAGE_SIZE} onChangePage={handlePage} />
                     </div>
                   ) : (
                     <p>Contracts not found</p>
