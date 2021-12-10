@@ -1,3 +1,5 @@
+import "./ContractTable.css";
+
 import React from "react"
 import { ContractLink } from "../../components/ContractLink"
 import { ContractElement } from "../../types/contract"
@@ -15,7 +17,7 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
         <table className="table">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col" >Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Owner</th>
                     <th scope="col">Txs</th>
@@ -26,8 +28,9 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
             <tbody>
                 {contracts.map(({ address, fees, gas, label, creator, tx }) => (
                     <tr key={address}>
-                        <td>{label}</td>
-
+                        <td>
+                          <span className="name-column" title={label}>{label}</span>
+                        </td>
                         <td><ContractLink address={address} maxLength={25} /> </td>
                         <td><AccountLink address={creator} maxLength={20} /></td>
                         <td>{tx}</td>

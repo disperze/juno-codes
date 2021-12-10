@@ -1,0 +1,8 @@
+.name-column {
+  width: 13rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  clear: both;
+  display: inline-block;
+}
