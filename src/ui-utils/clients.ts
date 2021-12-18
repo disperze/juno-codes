@@ -30,7 +30,7 @@ export function loadKeplrWallet(client: StargateClient, keplrChainInfo: any): Wa
     const w = window as any;
     await w.keplr.enable(chaindId);
 
-    return w.getOfflineSigner(chaindId);
+    return w.getOfflineSignerAuto(chaindId);
   };
 }
 
