@@ -74,7 +74,7 @@ const uniSettings: BackendSettings = {
   nodeUrls: ["https://rpc.juno.giansalex.dev"],
   denominations: ["ujunox"],
   addressPrefix: "juno",
-  gasPrice: GasPrice.fromString("0.25ucosm"),
+  gasPrice: GasPrice.fromString("0.025ujunox"),
   keplrChainInfo: {
     rpc: "https://rpc.juno.giansalex.dev:443",
     rest: "https://lcd.juno.giansalex.dev:443",
@@ -112,7 +112,7 @@ const uniSettings: BackendSettings = {
     ],
     features: ["stargate", "ibc-transfer", "cosmwasm", "no-legacy-stdTx"],
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
-    
+
   },
   contractsUrl: "https://graph.juno.giansalex.dev/api/rest/page"
 };
