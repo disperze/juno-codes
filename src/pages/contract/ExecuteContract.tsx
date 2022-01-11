@@ -1,5 +1,5 @@
 import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
-import { calculateFee, Coin } from "@cosmjs/stargate";
+import { Coin } from "@cosmjs/stargate";
 import React from "react";
 import JSONInput from "react-json-editor-ajrm";
 import { JsonView } from "../../components/JsonView";
@@ -66,7 +66,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
         userAddress,
         contractAddress,
         msgObject.result,
-        calculateFee(400000, settings.backend.gasPrice),
+        "auto",
         memo,
         coinsObject?.result,
       );
