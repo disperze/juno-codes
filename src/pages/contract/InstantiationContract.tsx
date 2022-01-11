@@ -30,6 +30,7 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
 
   const [memo, setMemo] = React.useState<string>();
   const [label, setLabel] = React.useState<string>();
+  const [admin, setAdmin] = React.useState<string>();
 
   const [msgObject, setMsgObject] = React.useState<Result<Record<string, any>>>();
   const [coinsObject, setCoinsObject] = React.useState<Result<ReadonlyArray<Coin>>>();
@@ -71,10 +72,11 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
         codeId,
         msgObject.result,
         label,
-        calculateFee(600000, settings.backend.gasPrice),
+        "auto",
         {
           memo: memo,
           funds: coinsObject?.result,
+          admin: admin,
         },
       );
       setExecuteResponse({ result: executeResponseResult });
@@ -128,11 +130,25 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
         </li>
         <li className="list-group-item d-flex align-items-baseline">
           <div className="form-group row flex-grow-1">
+            <label className="col-sm-2 col-form-label">Admin</label>
+            <div className="col-sm-10">
+              <input
+                className="form-control"
+                placeholder="juno1hgg47cx02l...luax5awn7k8mcm3ws (optional)"
+                value={admin}
+                onChange={(event) => setAdmin(event.target.value)}
+              />
+            </div>
+          </div>
+        </li>
+        <li className="list-group-item d-flex align-items-baseline">
+          <div className="form-group row flex-grow-1">
             <label className="col-sm-2 col-form-label">Memo</label>
             <div className="col-sm-10">
               <input
                 className="form-control"
                 value={memo}
+                placeholder="(optional)"
                 onChange={(event) => setMemo(event.target.value)}
               />
             </div>
