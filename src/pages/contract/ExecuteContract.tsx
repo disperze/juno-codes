@@ -5,7 +5,6 @@ import JSONInput from "react-json-editor-ajrm";
 import { JsonView } from "../../components/JsonView";
 
 import { ClientContext } from "../../contexts/ClientContext";
-import { settings } from "../../settings";
 import { jsonInputStyle } from "../../ui-utils/jsonInput";
 import { Result } from "./ContractPage";
 
@@ -13,7 +12,7 @@ const executePlaceholder = {
   transfer: { recipient: "juno14vhcdsyf83ngsrrqc92kmw8q9xakqjm0ff2dpn", amount: "1" },
 };
 
-const coinsPlaceholder = [{ denom: settings.backend.denominations[0], amount: "1" }];
+const coinsPlaceholder: Coin[] = [];
 
 interface Props {
   readonly contractAddress: string;
