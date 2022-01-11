@@ -39,7 +39,7 @@ function InstanceRow({ position, address }: Props): JSX.Element {
   ) : (
     <tr>
       <th scope="row">{position}</th>
-      <td>{contract.label}</td>
+      <td className="ctr-column" title={contract.label}>{contract.label}</td>
       <td>
         <ContractLink address={contract.address} />
       </td>

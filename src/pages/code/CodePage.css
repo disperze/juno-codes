@@ -1,0 +1,7 @@
+.ctr-column {
+  max-width: 18rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  clear: both;
+}
