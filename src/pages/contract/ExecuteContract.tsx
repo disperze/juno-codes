@@ -25,8 +25,6 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
   const [executing, setExecuting] = React.useState(false);
   const [error, setError] = React.useState<string>();
 
-  const [memo, setMemo] = React.useState<string>();
-
   const [msgObject, setMsgObject] = React.useState<Result<Record<string, any>>>();
   const [coinsObject, setCoinsObject] = React.useState<Result<ReadonlyArray<Coin>>>();
 
@@ -67,7 +65,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
         contractAddress,
         msgObject.result,
         "auto",
-        memo,
+        undefined,
         coinsObject?.result,
       );
       setExecuteResponse({ result: executeResponseResult });
@@ -106,18 +104,6 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
             style={jsonInputStyle}
             onChange={({ jsObject }: any) => setCoinsObject({ result: jsObject })}
           />
-        </li>
-        <li className="list-group-item d-flex align-items-baseline">
-          <div className="form-group row flex-grow-1">
-            <label className="col-sm-2 col-form-label">Memo</label>
-            <div className="col-sm-10">
-              <input
-                className="form-control"
-                value={memo}
-                onChange={(event) => setMemo(event.target.value)}
-              />
-            </div>
-          </div>
         </li>
         <div className="list-group-item btn-group">
           {executing ? (
