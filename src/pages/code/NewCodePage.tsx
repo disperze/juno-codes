@@ -40,7 +40,7 @@ export function NewCodePage(): JSX.Element {
       const executeResponseResult: UploadResult = await signingClient.upload(
         userAddress,
         wasmBytes,
-        calculateFee(2000000, settings.backend.gasPrice),
+        calculateFee(30000000, settings.backend.gasPrice),
         memo
       );
       setExecuteResponse({ result: executeResponseResult });
