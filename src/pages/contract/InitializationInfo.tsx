@@ -27,6 +27,9 @@ export function InitializationInfo({ contract, instantiationTxHash }: Props): JS
           )}
         </li>
         <li className="list-group-item">
+          Label: {contract.label}
+        </li>
+        <li className="list-group-item">
           Creator: <AccountLink address={contract.creator} maxLength={null} />
         </li>
         <li className="list-group-item">
