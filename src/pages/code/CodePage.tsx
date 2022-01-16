@@ -96,7 +96,23 @@ export function CodePage(): JSX.Element {
             ) : (
               <>
                 <CodeInfo code={details} uploadTxHash={uploadTxHash} />
-                <InstantiationContract codeId={details.id} />
+                <div className="accordion" id="accordionContract">
+                  <div className="card">
+                    <div className="card-header" id="headingOne">
+                      <h2 className="mb-0">
+                        <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Create a Contract
+                        </button>
+                      </h2>
+                    </div>
+
+                    <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionContract">
+                      <div className="card-body">
+                        <InstantiationContract codeId={details.id} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </div>

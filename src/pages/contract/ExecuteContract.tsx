@@ -79,7 +79,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
     <div className="card mb-3">
       <ul className="list-group list-group-flush">
         <li className="list-group-item d-flex align-items-baseline">
-          <span title="The contract query input">Execute contract:</span>
+          <span title="The contract query input">Message:</span>
         </li>
         <li className="list-group-item d-flex align-items-baseline">
           <JSONInput

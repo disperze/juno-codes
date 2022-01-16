@@ -246,8 +246,38 @@ export function ContractPage(): JSX.Element {
               <>
                 <InitializationInfo contract={details} instantiationTxHash={instantiationTxHash} />
                 <HistoryInfo contractCodeHistory={contractCodeHistory} />
-                <QueryContract contractAddress={contractAddress} />
-                <ExecuteContract contractAddress={contractAddress} />
+                <div className="accordion" id="accordionContract">
+                  <div className="card">
+                    <div className="card-header" id="headingOne">
+                      <h2 className="mb-0">
+                        <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Read Contract
+                        </button>
+                      </h2>
+                    </div>
+
+                    <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionContract">
+                      <div className="card-body">
+                        <QueryContract contractAddress={contractAddress} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card">
+                    <div className="card-header" id="headingTwo">
+                      <h2 className="mb-0">
+                        <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Write Contract
+                        </button>
+                      </h2>
+                    </div>
+
+                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionContract">
+                      <div className="card-body">
+                      <ExecuteContract contractAddress={contractAddress} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </div>
