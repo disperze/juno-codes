@@ -3,14 +3,19 @@ import React, { Fragment } from "react";
 
 import { AccountLink } from "../../../components/AccountLink";
 import { CodeLink } from "../../../components/CodeLink";
+import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { parseMsgContract, printableBalance } from "../../../ui-utils";
 
 interface Props {
   readonly msg: IMsgInstantiateContract;
+  readonly log: string;
 }
 
-export function MsgInstantiateContract({ msg }: Props): JSX.Element {
+export function MsgInstantiateContract({ msg, log }: Props): JSX.Element {
+  const logs = JSON.parse(log);
+  const contract = getEventAttributeValue(logs[0].events, "instantiate", "_contract_address");
+
   return (
     <Fragment>
       <li className="list-group-item">
@@ -34,6 +39,22 @@ export function MsgInstantiateContract({ msg }: Props): JSX.Element {
         :
         <JsonView src={parseMsgContract(msg.msg)} strLength={100} />
       </li>
+      <li className="list-group-item">
+        <span className="font-weight-bold">Output:</span>{" "}
+        <ContractLink address={contract} maxLength={null} />
+      </li>
     </Fragment>
   );
+}
+
+function getEventAttributeValue(events: any[], type: string, key: string): string {
+  const event = events.find((e) => e.type === type);
+
+  if (!event) {
+    return "-";
+  }
+
+  const attr = event.attributes.find((a: any) => a.key === key);
+
+  return attr.value;
 }

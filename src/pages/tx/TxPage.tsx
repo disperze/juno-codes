@@ -155,6 +155,7 @@ export function TxPage(): JSX.Element {
                     ) : isAnyMsgInstantiateContract(msg) ? (
                       <MsgInstantiateContract
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                        log={details.rawLog}
                       />
                     ) : isAnyMsgExecuteContract(msg) ? (
                       <MsgExecuteContract
