@@ -26,6 +26,7 @@ export interface ContractElement {
     tx:            number;
     creation_time: string;
     height:        number;
+    ibc:           boolean;
 }
 
 export interface ContractsAggregate {

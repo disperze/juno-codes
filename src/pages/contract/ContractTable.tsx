@@ -26,10 +26,12 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
                 </tr>
             </thead>
             <tbody>
-                {contracts.map(({ address, fees, gas, label, creator, tx }) => (
+                {contracts.map(({ address, fees, gas, label, creator, tx, ibc }) => {
+                  const ibcBadge = ibc ? (<span className="badge badge-pill badge-info">IBC</span>): <></>;
+                  return (
                     <tr key={address}>
                         <td>
-                          <span className="name-column" title={label}>{label}</span>
+                          <span className="name-column" title={label}>{label} {ibcBadge}</span>
                         </td>
                         <td><ContractLink address={address} maxLength={25} /> </td>
                         <td><AccountLink address={creator} maxLength={20} /></td>
@@ -37,7 +39,7 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
                         <td>{gas}</td>
                         <td>{printableBalance([{amount: fees.toString(), denom: settings.backend.denominations[0]}])}</td>
                     </tr>
-                ))}
+                )})}
             </tbody>
         </table>)
 }
