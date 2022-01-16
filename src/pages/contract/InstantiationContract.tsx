@@ -2,6 +2,7 @@ import { InstantiateResult } from "@cosmjs/cosmwasm-stargate";
 import { Coin } from "@cosmjs/stargate";
 import React from "react";
 import JSONInput from "react-json-editor-ajrm";
+import CoinsTransfer from "../../components/CoinTransfer";
 import { ContractLink } from "../../components/ContractLink";
 import { TransactionLink } from "../../components/TransactionLink";
 
@@ -15,8 +16,6 @@ const executePlaceholder = {
   symbol: "NTN",
   decimals: 6,
 };
-
-const coinsPlaceholder = [{ denom: settings.backend.denominations[0], amount: "1" }];
 
 interface Props {
   readonly codeId: number;
@@ -32,13 +31,12 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
   const [admin, setAdmin] = React.useState<string>();
 
   const [msgObject, setMsgObject] = React.useState<Result<Record<string, any>>>();
-  const [coinsObject, setCoinsObject] = React.useState<Result<ReadonlyArray<Coin>>>();
 
   const [executeResponse, setExecuteResponse] = React.useState<Result<InstantiateResult>>();
+  const [coinsTransfer, setCoinsTransfer] = React.useState<ReadonlyArray<Coin>>();
 
   React.useEffect(() => {
     setMsgObject({ result: executePlaceholder });
-    setCoinsObject({ result: coinsPlaceholder });
   }, []);
 
   React.useEffect(() => {
@@ -52,13 +50,8 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
       return;
     }
 
-    if (coinsObject?.error) {
-      setError(coinsObject.error);
-      return;
-    }
-
     setError(undefined);
-  }, [coinsObject, executeResponse, msgObject]);
+  }, [executeResponse, msgObject]);
 
   async function executeContract(): Promise<void> {
     if (!msgObject?.result || !userAddress || !label || !signingClient) return;
@@ -73,7 +66,7 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
         label,
         "auto",
         {
-          funds: coinsObject?.result,
+          funds: coinsTransfer,
           admin: admin,
         },
       );
@@ -101,22 +94,10 @@ export function InstantiationContract({ codeId }: Props): JSX.Element {
             onChange={({ jsObject }: any) => setMsgObject({ result: jsObject })}
           />
         </li>
-        <li className="list-group-item d-flex align-items-baseline">
-          <span title="The contract query input">Coins to transfer:</span>
-        </li>
-        <li className="list-group-item d-flex align-items-baseline">
-          <JSONInput
-            width="100%"
-            height="120px"
-            placeholder={coinsPlaceholder}
-            confirmGood={false}
-            style={jsonInputStyle}
-            onChange={({ jsObject }: any) => setCoinsObject({ result: jsObject })}
-          />
-        </li>
+        <CoinsTransfer denom={settings.backend.denominations[0]} onChange={(coins) => setCoinsTransfer(coins)} />
         <li className="list-group-item d-flex align-items-baseline">
           <div className="form-group row flex-grow-1">
-            <label className="col-sm-2 col-form-label">Label</label>
+            <label className="col-sm-2 col-form-label">Label *</label>
             <div className="col-sm-10">
               <input
                 className="form-control"

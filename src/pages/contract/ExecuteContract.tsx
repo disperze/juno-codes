@@ -2,17 +2,17 @@ import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 import { Coin } from "@cosmjs/stargate";
 import React from "react";
 import JSONInput from "react-json-editor-ajrm";
+import CoinsTransfer from "../../components/CoinTransfer";
 import { JsonView } from "../../components/JsonView";
 
 import { ClientContext } from "../../contexts/ClientContext";
+import { settings } from "../../settings";
 import { jsonInputStyle } from "../../ui-utils/jsonInput";
 import { Result } from "./ContractPage";
 
 const executePlaceholder = {
   transfer: { recipient: "juno14vhcdsyf83ngsrrqc92kmw8q9xakqjm0ff2dpn", amount: "1" },
 };
-
-const coinsPlaceholder: Coin[] = [];
 
 interface Props {
   readonly contractAddress: string;
@@ -25,13 +25,12 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
   const [error, setError] = React.useState<string>();
 
   const [msgObject, setMsgObject] = React.useState<Result<Record<string, any>>>();
-  const [coinsObject, setCoinsObject] = React.useState<Result<ReadonlyArray<Coin>>>();
+  const [coinsTransfer, setCoinsTransfer] = React.useState<ReadonlyArray<Coin>>();
 
   const [executeResponse, setExecuteResponse] = React.useState<Result<ExecuteResult>>();
 
   React.useEffect(() => {
     setMsgObject({ result: executePlaceholder });
-    setCoinsObject({ result: coinsPlaceholder });
   }, []);
 
   React.useEffect(() => {
@@ -45,13 +44,8 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
       return;
     }
 
-    if (coinsObject?.error) {
-      setError(coinsObject.error);
-      return;
-    }
-
     setError(undefined);
-  }, [coinsObject, executeResponse, msgObject]);
+  }, [executeResponse, msgObject]);
 
   async function executeContract(): Promise<void> {
     if (!msgObject?.result || !userAddress || !signingClient) return;
@@ -65,7 +59,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
         msgObject.result,
         "auto",
         undefined,
-        coinsObject?.result,
+        coinsTransfer,
       );
       setExecuteResponse({ result: executeResponseResult });
     } catch (error) {
@@ -79,7 +73,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
     <div className="card mb-3">
       <ul className="list-group list-group-flush">
         <li className="list-group-item d-flex align-items-baseline">
-          <span title="The contract query input">Message:</span>
+          <span title="The contract query input">Execute Message:</span>
         </li>
         <li className="list-group-item d-flex align-items-baseline">
           <JSONInput
@@ -91,19 +85,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
             onChange={({ jsObject }: any) => setMsgObject({ result: jsObject })}
           />
         </li>
-        <li className="list-group-item d-flex align-items-baseline">
-          <span title="The contract query input">Coins to transfer:</span>
-        </li>
-        <li className="list-group-item d-flex align-items-baseline">
-          <JSONInput
-            width="100%"
-            height="120px"
-            placeholder={coinsPlaceholder}
-            confirmGood={false}
-            style={jsonInputStyle}
-            onChange={({ jsObject }: any) => setCoinsObject({ result: jsObject })}
-          />
-        </li>
+        <CoinsTransfer denom={settings.backend.denominations[0]} onChange={(coins) => setCoinsTransfer(coins)} />
         <div className="list-group-item btn-group">
           {executing ? (
             <button className="btn btn-primary" type="button" disabled>
