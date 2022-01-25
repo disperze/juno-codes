@@ -18,58 +18,6 @@ const devnetStargateSettings: BackendSettings = {
   gasPrice: GasPrice.fromString("0.25ucosm"),
 };
 
-const musselnetSettings: BackendSettings = {
-  nodeUrls: ["https://rpc.musselnet.cosmwasm.com"],
-  denominations: ["umayo", "ufrites"],
-  addressPrefix: "wasm",
-  gasPrice: GasPrice.fromString("0.25ucosm"),
-};
-
-const pebblenetSettings: BackendSettings = {
-  nodeUrls: ["https://rpc.pebblenet.cosmwasm.com"],
-  denominations: ["upebble"],
-  addressPrefix: "wasm",
-  gasPrice: GasPrice.fromString("0.25ucosm"),
-  keplrChainInfo: {
-    rpc: "https://rpc.pebblenet.cosmwasm.com",
-    rest: "https://lcd.pebblenet.cosmwasm.com",
-    chainId: "pebblenet-1",
-    chainName: "Wasm Pebblenet",
-    stakeCurrency: {
-      coinDenom: "PEBBLE",
-      coinMinimalDenom: "upebble",
-      coinDecimals: 6,
-    },
-    bip44: {
-      coinType: 118,
-    },
-    bech32Config: {
-      bech32PrefixAccAddr: "wasm",
-      bech32PrefixAccPub: "wasmpub",
-      bech32PrefixValAddr: "wasmvaloper",
-      bech32PrefixValPub: "wasmvaloperpub",
-      bech32PrefixConsAddr: "wasmvalcons",
-      bech32PrefixConsPub: "wasmvalconspub",
-    },
-    currencies: [
-      {
-        coinDenom: "PEBBLE",
-        coinMinimalDenom: "upebble",
-        coinDecimals: 6,
-      },
-    ],
-    feeCurrencies: [
-      {
-        coinDenom: "PEBBLE",
-        coinMinimalDenom: "upebble",
-        coinDecimals: 6,
-      },
-    ],
-    features: ["stargate", "ibc-transfer", "cosmwasm"],
-    explorerUrlToTx: "https://block-explorer.pebblenet.cosmwasm.com/transactions/{txHash}",
-  },
-};
-
 const uniSettings: BackendSettings = {
   nodeUrls: ["https://rpc.juno.giansalex.dev"],
   denominations: ["ujunox"],
@@ -166,8 +114,6 @@ const juno1Settings: BackendSettings = {
 
 const knownBackends: Partial<Record<string, BackendSettings>> = {
   devnetStargate: devnetStargateSettings,
-  musselnet: musselnetSettings,
-  pebblenet: pebblenetSettings,
   uninet: uniSettings,
   juno1: juno1Settings,
 };
