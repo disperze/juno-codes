@@ -11,7 +11,6 @@ import { ClientContext, ClientContextValue } from "../contexts/ClientContext";
 import { AccountPage } from "../pages/account/AccountPage";
 import { CodePage } from "../pages/code/CodePage";
 import { NewCodePage } from "../pages/code/NewCodePage";
-import { CodesPage } from "../pages/codes/CodesPage";
 import { ContractPage } from "../pages/contract/ContractPage";
 import { TxPage } from "../pages/tx/TxPage";
 import { settings } from "../settings";
@@ -24,6 +23,7 @@ import {
 import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
 import { TokenPage } from "../pages/tokens/TokenPage";
+import { CodeDashboardPage } from "../pages/codes/CodeDashboard";
 
 const { nodeUrls } = settings.backend;
 const typeRegistry = new Registry([
@@ -66,7 +66,7 @@ export function App(): JSX.Element {
     <ClientContext.Provider value={contextValue}>
       <FlexibleRouter type={settings.deployment.routerType}>
         <Switch>
-          <Route exact path="/codes" component={CodesPage} />
+          <Route exact path="/codes" component={CodeDashboardPage} />
           <Route exact path="/tokens" component={TokenPage} />
           <Route path="/codes/new" component={NewCodePage} />
           <Route path="/codes/:codeId" component={CodePage} />

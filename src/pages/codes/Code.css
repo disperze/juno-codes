@@ -29,3 +29,7 @@ a.code-content:hover {
 .code-content .details {
   display: inline-block;
 }
+
+.code-package {
+  color: cadetblue;
+}
