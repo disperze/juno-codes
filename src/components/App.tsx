@@ -24,8 +24,9 @@ import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
 import { TokenPage } from "../pages/tokens/TokenPage";
 import { CodeDashboardPage } from "../pages/codes/CodeDashboard";
+import { CodesPage } from "../pages/codes/CodesPage";
 
-const { nodeUrls } = settings.backend;
+const { nodeUrls, contractsUrl } = settings.backend;
 const typeRegistry = new Registry([
   [msgStoreCodeTypeUrl, MsgStoreCode],
   [msgInstantiateContractTypeUrl, MsgInstantiateContract],
@@ -66,15 +67,20 @@ export function App(): JSX.Element {
     <ClientContext.Provider value={contextValue}>
       <FlexibleRouter type={settings.deployment.routerType}>
         <Switch>
-          <Route exact path="/codes" component={CodeDashboardPage} />
-          <Route exact path="/tokens" component={TokenPage} />
+          <Route exact path="/codes" component={contractsUrl ? CodeDashboardPage: CodesPage} />
           <Route path="/codes/new" component={NewCodePage} />
           <Route path="/codes/:codeId" component={CodePage} />
           <Route path="/contracts/:contractAddress" component={ContractPage} />
           <Route path="/transactions/:txId" component={TxPage} />
           <Route path="/accounts/:address" component={AccountPage} />
-          <Route path="/" component={DashboardPage} />
-          <Route component={() => <Redirect to="/" />} />
+          {contractsUrl ? (
+            <>
+              <Route exact path="/tokens" component={TokenPage} />
+              <Route path="/" component={DashboardPage} />
+            </>
+          ): (
+            <Route component={() => <Redirect to="/codes" />} />
+          )}
         </Switch>
       </FlexibleRouter>
     </ClientContext.Provider>
