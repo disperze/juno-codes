@@ -43,4 +43,49 @@ export function isAnyMsgExecuteContract(msg: IAny): msg is AnyMsgExecuteContract
   return msg.typeUrl === msgExecuteContractTypeUrl && !!msg.value;
 }
 
+
+export interface TxLog {
+  msg_index?: number
+  events: TxEvent[]
+}
+
+export interface TxEvent {
+  type: string
+  attributes: TxAttribute[]
+}
+
+export interface TxAttribute {
+  key: string
+  value: string
+}
+
+
+export function GetTxLogByIndex(rawLog:string, index: number): TxLog {
+  const logs:TxLog[] = JSON.parse(rawLog);
+
+  const log = logs.find((log) => log.msg_index === index || (index === 0 && !log.msg_index));
+
+  return log ?? {events: []};
+}
+
+export function findEventType(events: TxEvent[], type: string): TxEvent|undefined {
+  return events.find((e) => e.type === type);
+}
+
+export function findEventAttribute(attrs: TxAttribute[], key: string): TxAttribute|undefined {
+  return attrs.find((a) => a.key === key);
+}
+
+export function findEventAttributeValue(events: TxEvent[], type: string, key: string): string|undefined {
+  const event = findEventType(events, type);
+
+  if (!event) {
+    return undefined;
+  }
+
+  const attr = findEventAttribute(event.attributes, key);
+
+  return attr?.value;
+}
+
 /* eslint-enable @typescript-eslint/camelcase */

@@ -20,6 +20,7 @@ import {
   loadingState,
 } from "../../ui-utils/states";
 import {
+  GetTxLogByIndex,
   isAnyMsgExecuteContract,
   isAnyMsgInstantiateContract,
   isAnyMsgSend,
@@ -138,7 +139,9 @@ export function TxPage(): JSX.Element {
             ) : details === undefined ? (
               <p>Transaction not found</p>
             ) : (
-              Tx.decode(details.tx).body?.messages?.map((msg: any, index: number) => (
+              Tx.decode(details.tx).body?.messages?.map((msg: any, index: number) => {
+                const log = GetTxLogByIndex(details.rawLog, index);
+                return (
                 <div className="card mb-3" key={`${details.hash}_${index}`}>
                   <div className="card-header">
                     <h4>
@@ -155,7 +158,7 @@ export function TxPage(): JSX.Element {
                     ) : isAnyMsgInstantiateContract(msg) ? (
                       <MsgInstantiateContract
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
-                        log={details.rawLog}
+                        log={log}
                       />
                     ) : isAnyMsgExecuteContract(msg) ? (
                       <MsgExecuteContract
@@ -168,7 +171,7 @@ export function TxPage(): JSX.Element {
                     )}
                   </ul>
                 </div>
-              ))
+              )})
             )}
           </div>
         </div>
