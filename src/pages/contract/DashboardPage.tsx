@@ -70,7 +70,7 @@ export function DashboardPage(): JSX.Element {
           <div className="row">
             <div className="card shadow mb-4 w-100">
               <div className="card-header py-3">
-                <h6 className="m-0 font-weight-bold text-primary" title="JUNO Contracts Ranking by gas used">JUNO Contracts Ranking</h6>
+                <h6 className="m-0 font-weight-bold text-warning" title="JUNO Contracts Ranking by gas used">JUNO Contracts Ranking</h6>
               </div>
               <div className="card-body">
                 <div className="table-responsive w-100">
