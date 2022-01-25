@@ -3,7 +3,7 @@
 ## Use hosted
 
 The explorer is configured
-for [Lucina](https://github.com/CosmosContracts/testnets/tree/main/lucina).
+for [uni-1](https://github.com/CosmosContracts/testnets/tree/main/uni-1).
 
 ## Use local
 
@@ -20,7 +20,7 @@ You don't need to run a local network in order to connect to the testnets, you j
 #### Lucina
 
 ```sh
-yarn start-lucinanet
+yarn start-uninet
 ```
 
 ### Run against local networks
