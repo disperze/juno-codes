@@ -17,10 +17,8 @@ yarn install
 
 You don't need to run a local network in order to connect to the testnets, you just need the right start script for each network.
 
-#### Lucina
-
 ```sh
-yarn start-uninet
+yarn start
 ```
 
 ### Run against local networks

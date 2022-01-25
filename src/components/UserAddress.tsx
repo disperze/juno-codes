@@ -11,7 +11,7 @@ export function UserAddress(): JSX.Element {
       <Link className="btn btn-light mr-3" to={`/codes/new`}>
         Upload
       </Link>
-      <div className="mr-3 p-2 rounded bg-white">
+      <div className="p-2 rounded bg-white">
         <span className="badge">{userAddress}</span>
       </div>
     </>

@@ -114,7 +114,7 @@ const uniSettings: BackendSettings = {
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
 
   },
-  contractsUrl: "https://graph.juno.giansalex.dev/api/rest/page"
+  contractsUrl: "http://165.232.154.150:8081/api/rest/v2.0/contracts"
 };
 
 const juno1Settings: BackendSettings = {

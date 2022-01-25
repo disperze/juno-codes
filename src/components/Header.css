@@ -1,0 +1,15 @@
+
+.main-navbar {
+  background: transparent !important;
+  padding: 0.5rem 7.5rem;
+}
+
+.site-title {
+  color: #fa8072 !important;
+  font-weight: bold;
+}
+
+.login-container {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
