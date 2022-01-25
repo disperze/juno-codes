@@ -6,7 +6,7 @@ import { CodeLink } from "../../../components/CodeLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { parseMsgContract, printableBalance } from "../../../ui-utils";
-import { findEventAttributeValue, TxLog } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType, TxLog } from "../../../ui-utils/txs";
 
 interface Props {
   readonly msg: IMsgInstantiateContract;
@@ -14,7 +14,8 @@ interface Props {
 }
 
 export function MsgInstantiateContract({ msg, log }: Props): JSX.Element {
-  const contract = findEventAttributeValue(log.events, "instantiate", "_contract_address");
+  const instEvent = findEventType(log.events, "instantiate")!;
+  let instContracts = findEventAttributes(instEvent.attributes, "_contract_address");
 
   return (
     <Fragment>
@@ -39,10 +40,26 @@ export function MsgInstantiateContract({ msg, log }: Props): JSX.Element {
         :
         <JsonView src={parseMsgContract(msg.msg)} strLength={100} />
       </li>
-      {contract && (
+      {instContracts.length > 1 && (
+        <li className="list-group-item">
+          <span title="The contract level message" className="font-weight-bold">
+            New contracts:
+          </span>
+          <p />
+          <ul>
+            {instContracts.map((e) => (
+              <li key={e.value}>
+                <ContractLink address={e.value} maxLength={null} />
+              </li>
+            ))}
+          </ul>
+
+        </li>
+      )}
+      {instContracts.length === 1 && (
           <li className="list-group-item">
             <span className="font-weight-bold">Contract:</span>{" "}
-            <ContractLink address={contract} maxLength={null} />
+            <ContractLink address={instContracts[0].value} maxLength={null} />
           </li>
       )}
     </Fragment>

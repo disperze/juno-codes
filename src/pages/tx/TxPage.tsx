@@ -163,6 +163,7 @@ export function TxPage(): JSX.Element {
                     ) : isAnyMsgExecuteContract(msg) ? (
                       <MsgExecuteContract
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                        log={log}
                       />
                     ) : (
                       <li className="list-group-item">

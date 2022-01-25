@@ -59,6 +59,10 @@ export interface TxAttribute {
   value: string
 }
 
+export interface ContractEvent {
+  contract: string
+  attributes: TxAttribute[]
+}
 
 export function GetTxLogByIndex(rawLog:string, index: number): TxLog {
   const logs:TxLog[] = JSON.parse(rawLog);
@@ -72,8 +76,8 @@ export function findEventType(events: TxEvent[], type: string): TxEvent|undefine
   return events.find((e) => e.type === type);
 }
 
-export function findEventAttribute(attrs: TxAttribute[], key: string): TxAttribute|undefined {
-  return attrs.find((a) => a.key === key);
+export function findEventAttributes(attrs: TxAttribute[], key: string): TxAttribute[] {
+  return attrs.filter((a) => a.key === key);
 }
 
 export function findEventAttributeValue(events: TxEvent[], type: string, key: string): string|undefined {
@@ -83,9 +87,36 @@ export function findEventAttributeValue(events: TxEvent[], type: string, key: st
     return undefined;
   }
 
-  const attr = findEventAttribute(event.attributes, key);
+  const attr = findEventAttributes(event.attributes, key);
 
-  return attr?.value;
+  return attr.length > 0 ? attr[0].value : undefined;
+}
+
+export function parseContractEvent(attrs: TxAttribute[]): ContractEvent[] {
+  const contracts: ContractEvent[] = []
+  let event: ContractEvent|undefined = undefined;
+  attrs.forEach(attr => {
+    if (attr.key !== "_contract_address") {
+      event?.attributes.push(attr);
+
+      return;
+    }
+
+    if (event) {
+      contracts.push(event);
+    }
+
+    event = {
+      contract: attr.value,
+      attributes: []
+    }
+  });
+
+  if (event) {
+    contracts.push(event);
+  }
+
+  return contracts;
 }
 
 /* eslint-enable @typescript-eslint/camelcase */
