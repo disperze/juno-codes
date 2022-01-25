@@ -28,6 +28,7 @@ export function Header(): JSX.Element {
           </li>
         </ul>
         <div className="form-inline my-2">
+          <span className="badge badge-warning network-badge">Testnet</span>
           <UserAddress />
           <ul className="login-container">
             <li className="nav-item dropdown">
