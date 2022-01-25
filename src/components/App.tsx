@@ -23,6 +23,7 @@ import {
 } from "../ui-utils/txs";
 import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
+import { TokenPage } from "../pages/tokens/TokenPage";
 
 const { nodeUrls } = settings.backend;
 const typeRegistry = new Registry([
@@ -66,6 +67,7 @@ export function App(): JSX.Element {
       <FlexibleRouter type={settings.deployment.routerType}>
         <Switch>
           <Route exact path="/codes" component={CodesPage} />
+          <Route exact path="/tokens" component={TokenPage} />
           <Route path="/codes/new" component={NewCodePage} />
           <Route path="/codes/:codeId" component={CodePage} />
           <Route path="/contracts/:contractAddress" component={ContractPage} />

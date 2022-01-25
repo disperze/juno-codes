@@ -17,6 +17,9 @@ export function Header(): JSX.Element {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+            <Link className="nav-link" to={`/`}>Contracts</Link>
+          </li>
           <li className="nav-item active">
             <Link className="nav-link" to={`/tokens`}>Tokens</Link>
           </li>
