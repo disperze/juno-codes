@@ -26,8 +26,8 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
                 </tr>
             </thead>
             <tbody>
-                {contracts.map(({ address, fees, gas, label, creator, tx, ibc }) => {
-                  const ibcBadge = ibc ? (<span className="badge badge-pill badge-info">IBC</span>): <></>;
+                {contracts.map(({ address, fees, gas, label, creator, tx, code }) => {
+                  const ibcBadge = code.ibc ? (<span className="badge badge-pill badge-info">IBC</span>): <></>;
                   return (
                     <tr key={address}>
                         <td>

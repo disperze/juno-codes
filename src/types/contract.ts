@@ -26,11 +26,15 @@ export interface ContractElement {
     tx:            number;
     creation_time: string;
     height:        number;
-    ibc:           boolean;
+    code:          ContractCodeElement;
+}
+
+export interface ContractCodeElement {
+  ibc: boolean;
 }
 
 export interface ContractsAggregate {
-    aggregate: Aggregate;
+  aggregate: Aggregate;
 }
 
 export interface Aggregate {
