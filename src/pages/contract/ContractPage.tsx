@@ -33,6 +33,7 @@ import { Execution, ExecutionsTable } from "./ExecutionsTable";
 import { HistoryInfo } from "./HistoryInfo";
 import { InitializationInfo } from "./InitializationInfo";
 import { QueryContract } from "./QueryContract";
+import { GetTxLogByIndex } from "../../ui-utils/txs";
 
 type IAnyMsgExecuteContract = {
   readonly typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -89,11 +90,14 @@ const getAndSetInstantiationTxHash = (
 function getExecutionFromStargateMsgExecuteContract(typeRegistry: Registry, tx: IndexedTx) {
   return (msg: IAnyMsgExecuteContract, i: number) => {
     const decodedMsg = typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value });
+    const log = GetTxLogByIndex(tx.rawLog, i);
+
     return {
       key: `${tx.hash}_${i}`,
       height: tx.height,
       transactionId: tx.hash,
       msg: decodedMsg,
+      log: log,
     };
   };
 }
@@ -290,7 +294,7 @@ export function ContractPage(): JSX.Element {
             ) : isErrorState(executions) ? (
               <p>An Error occurred when loading transactions</p>
             ) : executions.length !== 0 ? (
-              <ExecutionsTable executions={executions} />
+              <ExecutionsTable executions={executions} contract={contractAddress} />
             ) : (
               <p>Contract was not yet executed</p>
             )}
