@@ -66,16 +66,28 @@ export function App(): JSX.Element {
   return (
     <ClientContext.Provider value={contextValue}>
       <FlexibleRouter type={settings.deployment.routerType}>
-        <Switch>
-          <Route exact path="/codes" component={contractsUrl ? CodeDashboardPage: CodesPage} />
-          <Route path="/codes/new" component={NewCodePage} />
-          <Route path="/codes/:codeId" component={CodePage} />
-          <Route path="/contracts/:contractAddress" component={ContractPage} />
-          <Route path="/transactions/:txId" component={TxPage} />
-          <Route path="/accounts/:address" component={AccountPage} />
-          {contractsUrl && <Route exact path="/tokens" component={TokenPage} />}
-          <Route component={contractsUrl ? DashboardPage : () => <Redirect to="/codes" />} />
-        </Switch>
+        {contractsUrl ? (
+          <Switch>
+            <Route exact path="/codes" component={CodeDashboardPage} />
+            <Route exact path="/tokens" component={TokenPage} />
+            <Route path="/codes/new" component={NewCodePage} />
+            <Route path="/codes/:codeId" component={CodePage} />
+            <Route path="/contracts/:contractAddress" component={ContractPage} />
+            <Route path="/transactions/:txId" component={TxPage} />
+            <Route path="/accounts/:address" component={AccountPage} />
+            <Route component={DashboardPage} />
+          </Switch>
+        ): (
+          <Switch>
+            <Route exact path="/codes" component={CodesPage} />
+            <Route path="/codes/new" component={NewCodePage} />
+            <Route path="/codes/:codeId" component={CodePage} />
+            <Route path="/contracts/:contractAddress" component={ContractPage} />
+            <Route path="/transactions/:txId" component={TxPage} />
+            <Route path="/accounts/:address" component={AccountPage} />
+            <Route component={() => <Redirect to="/codes" />} />
+          </Switch>
+        )}
       </FlexibleRouter>
     </ClientContext.Provider>
   );
