@@ -109,7 +109,7 @@ const juno1Settings: BackendSettings = {
     explorerUrlToTx: "https://mintscan.io/juno/txs/{txHash}",
 
   },
-  contractsUrl: "https://graph.juno.giansalex.dev/api/rest/page"
+  contractsUrl: ""
 };
 
 const knownBackends: Partial<Record<string, BackendSettings>> = {
