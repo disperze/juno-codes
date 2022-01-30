@@ -2,6 +2,7 @@ import {
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgStoreCode,
+  MsgMigrateContract,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { Registry } from "@cosmjs/proto-signing";
 import React from "react";
@@ -11,6 +12,7 @@ import {
   msgExecuteContractTypeUrl,
   msgInstantiateContractTypeUrl,
   msgStoreCodeTypeUrl,
+  msgMigrateContractTypeUrl,
 } from "../ui-utils/txs";
 
 export interface ClientContextValue {
@@ -36,6 +38,7 @@ const dummyContext: ClientContextValue = {
     [msgStoreCodeTypeUrl, MsgStoreCode],
     [msgInstantiateContractTypeUrl, MsgInstantiateContract],
     [msgExecuteContractTypeUrl, MsgExecuteContract],
+    [msgMigrateContractTypeUrl, MsgMigrateContract],
   ]),
   resetClient: () => {},
   setUserAddress: () => {},

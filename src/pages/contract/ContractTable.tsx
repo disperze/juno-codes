@@ -19,7 +19,7 @@ export default function ContractTable({ contracts }: Props): JSX.Element {
                 <tr>
                     <th scope="col" >Name</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Owner</th>
+                    <th scope="col">Creator</th>
                     <th scope="col">Txs</th>
                     <th scope="col">Gas</th>
                     <th scope="col">Fees</th>

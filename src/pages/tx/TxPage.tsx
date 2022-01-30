@@ -25,12 +25,14 @@ import {
   isAnyMsgInstantiateContract,
   isAnyMsgSend,
   isAnyMsgStoreCode,
+  isAnyMsgMigrateContract,
 } from "../../ui-utils/txs";
 import { ExecutionInfo } from "./ExecutionInfo";
 import { MsgExecuteContract } from "./msgs/MsgExecuteContract";
 import { MsgInstantiateContract } from "./msgs/MsgInstantiateContract";
 import { MsgSend } from "./msgs/MsgSend";
 import { MsgStoreCode } from "./msgs/MsgStoreCode";
+import { MsgMigrateContract } from "./msgs/MsgMigrateContract";
 import { TxInfo } from "./TxInfo";
 
 const stargateEffect = (
@@ -164,6 +166,10 @@ export function TxPage(): JSX.Element {
                       <MsgExecuteContract
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
                         log={log}
+                      />
+                    ) : isAnyMsgMigrateContract(msg) ? (
+                      <MsgMigrateContract
+                        msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
                       />
                     ) : (
                       <li className="list-group-item">

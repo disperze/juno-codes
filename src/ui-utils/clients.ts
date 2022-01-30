@@ -7,13 +7,19 @@ import {
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgStoreCode,
+  MsgMigrateContract,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { LedgerSigner } from "@cosmjs/ledger-amino";
 import { OfflineDirectSigner, OfflineSigner, Registry } from "@cosmjs/proto-signing";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
 import { settings } from "../settings";
-import { msgExecuteContractTypeUrl, msgInstantiateContractTypeUrl, msgStoreCodeTypeUrl } from "./txs";
+import {
+  msgExecuteContractTypeUrl,
+  msgInstantiateContractTypeUrl,
+  msgStoreCodeTypeUrl,
+  msgMigrateContractTypeUrl,
+} from "./txs";
 
 export { StargateClient, StargateSigningClient };
 
@@ -73,6 +79,7 @@ async function createStargateSigningClient(signer: OfflineSigner): Promise<Starg
     [msgStoreCodeTypeUrl, MsgStoreCode],
     [msgInstantiateContractTypeUrl, MsgInstantiateContract],
     [msgExecuteContractTypeUrl, MsgExecuteContract],
+    [msgMigrateContractTypeUrl, MsgMigrateContract],
   ]);
 
   return StargateSigningClient.connectWithSigner(endpoint, signer, {

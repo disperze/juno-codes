@@ -2,6 +2,7 @@ import {
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgStoreCode,
+  MsgMigrateContract,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { Registry } from "@cosmjs/proto-signing";
 import React from "react";
@@ -19,6 +20,7 @@ import {
   msgExecuteContractTypeUrl,
   msgInstantiateContractTypeUrl,
   msgStoreCodeTypeUrl,
+  msgMigrateContractTypeUrl,
 } from "../ui-utils/txs";
 import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
@@ -31,6 +33,7 @@ const typeRegistry = new Registry([
   [msgStoreCodeTypeUrl, MsgStoreCode],
   [msgInstantiateContractTypeUrl, MsgInstantiateContract],
   [msgExecuteContractTypeUrl, MsgExecuteContract],
+  [msgMigrateContractTypeUrl, MsgMigrateContract],
 ]);
 
 export function App(): JSX.Element {

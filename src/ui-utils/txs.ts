@@ -6,6 +6,7 @@ export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 export const msgStoreCodeTypeUrl = "/cosmwasm.wasm.v1.MsgStoreCode";
 export const msgInstantiateContractTypeUrl = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 export const msgExecuteContractTypeUrl = "/cosmwasm.wasm.v1.MsgExecuteContract";
+export const msgMigrateContractTypeUrl = "/cosmwasm.wasm.v1.MsgMigrateContract";
 
 export interface AnyMsgSend {
   readonly typeUrl: "/cosmos.bank.v1beta1.MsgSend";
@@ -27,6 +28,11 @@ export interface AnyMsgExecuteContract {
   readonly value: Uint8Array;
 }
 
+export interface AnyMsgMigrateContract {
+  readonly typeUrl: "/cosmwasm.wasm.v1.MsgMigrateContract";
+  readonly value: Uint8Array;
+}
+
 export function isAnyMsgSend(msg: IAny): msg is AnyMsgSend {
   return msg.typeUrl === msgSendTypeUrl && !!msg.value;
 }
@@ -43,6 +49,9 @@ export function isAnyMsgExecuteContract(msg: IAny): msg is AnyMsgExecuteContract
   return msg.typeUrl === msgExecuteContractTypeUrl && !!msg.value;
 }
 
+export function isAnyMsgMigrateContract(msg: IAny): msg is AnyMsgExecuteContract {
+  return msg.typeUrl === msgMigrateContractTypeUrl && !!msg.value;
+}
 
 export interface TxLog {
   msg_index?: number
