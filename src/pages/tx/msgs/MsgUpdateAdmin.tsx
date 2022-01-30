@@ -21,7 +21,7 @@ export function MsgUpdateAdmin({ msg }: Props): JSX.Element {
       </li>
       <li className="list-group-item">
         <span className="font-weight-bold">New Admin:</span>{" "}
-        <ContractLink address={msg.newAdmin ?? "-"} maxLength={null} />
+        <AccountLink address={msg.newAdmin ?? "-"} maxLength={null} />
       </li>
     </Fragment>
   );
