@@ -26,6 +26,8 @@ import {
   isAnyMsgSend,
   isAnyMsgStoreCode,
   isAnyMsgMigrateContract,
+  isAnyMsgUpdateAdmin,
+  isAnyMsgClearAdmin,
 } from "../../ui-utils/txs";
 import { ExecutionInfo } from "./ExecutionInfo";
 import { MsgExecuteContract } from "./msgs/MsgExecuteContract";
@@ -34,6 +36,8 @@ import { MsgSend } from "./msgs/MsgSend";
 import { MsgStoreCode } from "./msgs/MsgStoreCode";
 import { MsgMigrateContract } from "./msgs/MsgMigrateContract";
 import { TxInfo } from "./TxInfo";
+import { MsgUpdateAdmin } from "./msgs/MsgUpdateAdmin";
+import { MsgClearAdmin } from "./msgs/MsgClearAdmin";
 
 const stargateEffect = (
   client: StargateClient,
@@ -169,6 +173,14 @@ export function TxPage(): JSX.Element {
                       />
                     ) : isAnyMsgMigrateContract(msg) ? (
                       <MsgMigrateContract
+                        msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                      />
+                    ) : isAnyMsgUpdateAdmin(msg) ? (
+                      <MsgUpdateAdmin
+                        msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                      />
+                    ) : isAnyMsgClearAdmin(msg) ? (
+                      <MsgClearAdmin
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
                       />
                     ) : (

@@ -7,6 +7,8 @@ export const msgStoreCodeTypeUrl = "/cosmwasm.wasm.v1.MsgStoreCode";
 export const msgInstantiateContractTypeUrl = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 export const msgExecuteContractTypeUrl = "/cosmwasm.wasm.v1.MsgExecuteContract";
 export const msgMigrateContractTypeUrl = "/cosmwasm.wasm.v1.MsgMigrateContract";
+export const msgMsgUpdateAdminTypeUrl = "/cosmwasm.wasm.v1.MsgUpdateAdmin";
+export const msgMsgClearAdminTypeUrl = "/cosmwasm.wasm.v1.MsgClearAdmin";
 
 export interface AnyMsgSend {
   readonly typeUrl: "/cosmos.bank.v1beta1.MsgSend";
@@ -33,6 +35,16 @@ export interface AnyMsgMigrateContract {
   readonly value: Uint8Array;
 }
 
+export interface AnyMsgUpdateAdmin {
+  readonly typeUrl: "/cosmwasm.wasm.v1.MsgUpdateAdmin";
+  readonly value: Uint8Array;
+}
+
+export interface AnyMsgClearAdmin {
+  readonly typeUrl: "/cosmwasm.wasm.v1.MsgClearAdmin";
+  readonly value: Uint8Array;
+}
+
 export function isAnyMsgSend(msg: IAny): msg is AnyMsgSend {
   return msg.typeUrl === msgSendTypeUrl && !!msg.value;
 }
@@ -49,8 +61,16 @@ export function isAnyMsgExecuteContract(msg: IAny): msg is AnyMsgExecuteContract
   return msg.typeUrl === msgExecuteContractTypeUrl && !!msg.value;
 }
 
-export function isAnyMsgMigrateContract(msg: IAny): msg is AnyMsgExecuteContract {
+export function isAnyMsgMigrateContract(msg: IAny): msg is AnyMsgMigrateContract {
   return msg.typeUrl === msgMigrateContractTypeUrl && !!msg.value;
+}
+
+export function isAnyMsgUpdateAdmin(msg: IAny): msg is AnyMsgUpdateAdmin {
+  return msg.typeUrl === msgMsgUpdateAdminTypeUrl && !!msg.value;
+}
+
+export function isAnyMsgClearAdmin(msg: IAny): msg is AnyMsgClearAdmin {
+  return msg.typeUrl === msgMsgClearAdminTypeUrl && !!msg.value;
 }
 
 export interface TxLog {

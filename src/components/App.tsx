@@ -3,6 +3,8 @@ import {
   MsgInstantiateContract,
   MsgStoreCode,
   MsgMigrateContract,
+  MsgUpdateAdmin,
+  MsgClearAdmin,
 } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { Registry } from "@cosmjs/proto-signing";
 import React from "react";
@@ -21,6 +23,8 @@ import {
   msgInstantiateContractTypeUrl,
   msgStoreCodeTypeUrl,
   msgMigrateContractTypeUrl,
+  msgMsgUpdateAdminTypeUrl,
+  msgMsgClearAdminTypeUrl,
 } from "../ui-utils/txs";
 import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
@@ -34,6 +38,8 @@ const typeRegistry = new Registry([
   [msgInstantiateContractTypeUrl, MsgInstantiateContract],
   [msgExecuteContractTypeUrl, MsgExecuteContract],
   [msgMigrateContractTypeUrl, MsgMigrateContract],
+  [msgMsgUpdateAdminTypeUrl, MsgUpdateAdmin],
+  [msgMsgClearAdminTypeUrl, MsgClearAdmin],
 ]);
 
 export function App(): JSX.Element {
