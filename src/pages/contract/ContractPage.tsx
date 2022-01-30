@@ -34,6 +34,9 @@ import { HistoryInfo } from "./HistoryInfo";
 import { InitializationInfo } from "./InitializationInfo";
 import { QueryContract } from "./QueryContract";
 import { GetTxLogByIndex } from "../../ui-utils/txs";
+import { MigrateContract } from "./MigrateContract";
+import { UpdateContractAdmin } from "./UpdateContractAdmin";
+import { ClearContractAdmin } from "./ClearContractAdmin";
 
 type IAnyMsgExecuteContract = {
   readonly typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -277,10 +280,73 @@ export function ContractPage(): JSX.Element {
 
                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionContract">
                       <div className="card-body">
-                      <ExecuteContract contractAddress={contractAddress} />
+                        <ExecuteContract contractAddress={contractAddress} />
                       </div>
                     </div>
                   </div>
+                  {!isLoadingState(details) && !isErrorState(details) && details.admin && (
+                    <div className="card">
+                      <div className="card-header" id="heading3">
+                        <h2 className="mb-0">
+                          <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            Admin
+                          </button>
+                        </h2>
+                      </div>
+
+                      <div id="collapse3" className="collapse" aria-labelledby="heading3" data-parent="#accordionContract">
+                        <div className="card-body">
+                          <div className="accordion" id="accordionAdmin">
+                            <div className="card">
+                              <div className="card-header">
+                                <h2 className="mb-0">
+                                  <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseMigrate" aria-expanded="false" aria-controls="collapseMigrate">
+                                    Migrate Contract
+                                  </button>
+                                </h2>
+                              </div>
+
+                              <div id="collapseMigrate" className="collapse" data-parent="#accordionAdmin">
+                                <div className="card-body">
+                                  <MigrateContract contractAddress={contractAddress} />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card">
+                              <div className="card-header">
+                                <h2 className="mb-0">
+                                  <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseUpdateAdmin" aria-expanded="false" aria-controls="collapseUpdateAdmin">
+                                    Update Admin
+                                  </button>
+                                </h2>
+                              </div>
+
+                              <div id="collapseUpdateAdmin" className="collapse" data-parent="#accordionAdmin">
+                                <div className="card-body">
+                                  <UpdateContractAdmin contractAddress={contractAddress} />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card">
+                              <div className="card-header">
+                                <h2 className="mb-0">
+                                  <button className="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseClearAdmin" aria-expanded="false" aria-controls="collapseClearAdmin">
+                                    Clear Admin
+                                  </button>
+                                </h2>
+                              </div>
+
+                              <div id="collapseClearAdmin" className="collapse" data-parent="#accordionAdmin">
+                                <div className="card-body">
+                                  <ClearContractAdmin contractAddress={contractAddress} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             )}
