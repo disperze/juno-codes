@@ -20,7 +20,7 @@ export function TxInfo({ tx }: Props): JSX.Element {
           <span className="font-weight-bold">Fee:</span> {printableBalance(txb.authInfo?.fee?.amount ?? [])}
         </li>
         <li className="list-group-item">
-          <span className="font-weight-bold">Gas:</span> {tx.gasUsed} / {tx.gasWanted}
+          <span className="font-weight-bold">Gas:</span> {tx.gasUsed} / {tx.gasWanted} ({(tx.gasUsed/tx.gasWanted*100).toFixed(2)}%)
         </li>
         <li className="list-group-item">
           <span className="font-weight-bold">Signatures:</span> {txb.signatures?.length ?? 0}
