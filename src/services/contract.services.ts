@@ -16,5 +16,10 @@ export default class ContractService {
                             .then(res => res.json());
     return codes;
   }
+  getCodeByHash = async (hash: string) => {
+    const codes = await fetch(`${settings.backend?.contractsUrl}codes-by-hash/${hash}`)
+                            .then(res => res.json());
+    return codes;
+  }
 }
 

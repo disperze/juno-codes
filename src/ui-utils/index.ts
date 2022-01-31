@@ -43,3 +43,11 @@ export function parseMsgContract(msg: Uint8Array): any {
 
   return JSON.parse(json);
 }
+
+export async function sha256(data: Uint8Array): Promise<string> {
+  const buffer = await crypto.subtle.digest('SHA-256', data)
+
+  return [...new Uint8Array(buffer)]
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('');
+}

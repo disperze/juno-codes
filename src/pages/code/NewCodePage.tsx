@@ -12,6 +12,9 @@ import { Result } from "../contract/ContractPage";
 import { CodeLink } from "../../components/CodeLink";
 import { TransactionLink } from "../../components/TransactionLink";
 import { settings } from "../../settings";
+import { sha256 } from "../../ui-utils";
+import { contractService } from "../../services/index"
+import { CodeByHashRespone, Code } from "../../types/code-by-hash";
 
 export function NewCodePage(): JSX.Element {
   const { userAddress, signingClient } = React.useContext(ClientContext);
@@ -21,6 +24,7 @@ export function NewCodePage(): JSX.Element {
   const [executing, setExecuting] = React.useState(false);
   const [executeResponse, setExecuteResponse] = React.useState<Result<UploadResult>>();
   const [error, setError] = React.useState<string>();
+  const [matchCodes, setMatchCodes] = React.useState<Code[]>();
 
   React.useEffect(() => {
     if (executeResponse?.error) {
@@ -35,7 +39,9 @@ export function NewCodePage(): JSX.Element {
     if (!userAddress || !wasm || !signingClient) return;
 
     setExecuting(true);
+    setMatchCodes(undefined);
     const wasmBytes = new Uint8Array(await wasm.arrayBuffer());
+
     try {
       const executeResponseResult: UploadResult = await signingClient.upload(
         userAddress,
@@ -51,6 +57,21 @@ export function NewCodePage(): JSX.Element {
     setExecuting(false);
   }
 
+  const onChangeWasmCode =  async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setWasm(file);
+    if (!file) {
+      return;
+    }
+
+    if (!settings.backend.contractsUrl) return;
+
+    const wasmBytes = new Uint8Array(await file.arrayBuffer());
+    const hash = await sha256(wasmBytes);
+    const result: CodeByHashRespone = await contractService.getCodeByHash(hash.toUpperCase());
+
+    setMatchCodes(result.codes);
+  };
   return (
     <div className="page">
       <Header />
@@ -84,7 +105,7 @@ export function NewCodePage(): JSX.Element {
                       type="file"
                       accept=".wasm"
                       className="ml-3 flex-grow-1 form-control-file"
-                      onChange={(e) => setWasm(e.target.files?.item(0))}
+                      onChange={async (e) => await onChangeWasmCode(e)}
                     />
                   </div>
                 </li>
@@ -112,6 +133,47 @@ export function NewCodePage(): JSX.Element {
                     </button>
                   )}
                 </div>
+                {matchCodes && (
+                  <>
+                    <li className="list-group-item">
+                      <span className="font-weight-bold">Wasm code already stored</span>
+                    </li>
+                    {matchCodes
+                      // order by desc
+                      .sort((a,b) => b.contracts_aggregate.aggregate.count - a.contracts_aggregate.aggregate.count)
+                      .map(matchCode => (
+                      <>
+                        <li className="list-group-item">
+                          <div className="row mb-3">
+                            <div className="col-md-2">
+                              <span>Code ID:</span>
+                            </div>
+                            <div className="col-md-10">
+                              <CodeLink codeId={matchCode.code_id} text={"#" + matchCode.code_id} />
+                            </div>
+                          </div>
+                          <div className="row mb-3">
+                            <div className="col-md-2">
+                              <span>Package:</span>
+                            </div>
+                            <div className="col-md-10">
+                              <span>{matchCode.version ?? "-"}</span>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-md-2">
+                              <span>Contracts:</span>
+                            </div>
+                            <div className="col-md-10">
+                              <span>{matchCode.contracts_aggregate.aggregate.count}</span>
+                            </div>
+                          </div>
+                        </li>
+                      </>
+                    ))}
+                  </>
+
+                )}
                 {executeResponse?.result ? (
                   <>
                     <li className="list-group-item">
