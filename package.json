@@ -10,6 +10,7 @@
     "base-start": "react-scripts start",
     "start-stargate": "REACT_APP_BACKEND=devnetStargate yarn base-start",
     "start-uninet": "cross-env REACT_APP_BACKEND=uninet yarn base-start",
+    "start-juno": "cross-env REACT_APP_BACKEND=juno1 yarn base-start",
     "start": "yarn start-uninet",
     "build": "react-scripts build",
     "test": "react-scripts test",

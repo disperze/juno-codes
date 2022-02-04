@@ -26,7 +26,7 @@ const uniSettings: BackendSettings = {
   keplrChainInfo: {
     rpc: "https://rpc.juno.giansalex.dev:443",
     rest: "https://lcd.juno.giansalex.dev:443",
-    chainId: "uni-1",
+    chainId: "uni-2",
     chainName: "Juno Testnet",
     stakeCurrency: {
       coinDenom: "JUNOX",
