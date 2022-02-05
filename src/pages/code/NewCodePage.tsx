@@ -66,11 +66,15 @@ export function NewCodePage(): JSX.Element {
 
     if (!settings.backend.contractsUrl) return;
 
-    const wasmBytes = new Uint8Array(await file.arrayBuffer());
-    const hash = await sha256(wasmBytes);
-    const result: CodeByHashRespone = await contractService.getCodeByHash(hash.toUpperCase());
+    try {
+      const wasmBytes = new Uint8Array(await file.arrayBuffer());
+      const hash = await sha256(wasmBytes);
+      const result: CodeByHashRespone = await contractService.getCodeByHash(hash.toUpperCase());
 
-    setMatchCodes(result.codes);
+      setMatchCodes(result.codes);
+    } catch {
+      setMatchCodes(undefined);
+    }
   };
   return (
     <div className="page">
@@ -133,7 +137,7 @@ export function NewCodePage(): JSX.Element {
                     </button>
                   )}
                 </div>
-                {matchCodes && (
+                {matchCodes && matchCodes.length > 0 && (
                   <>
                     <li className="list-group-item">
                       <span className="font-weight-bold">Wasm code already stored</span>
