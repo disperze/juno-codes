@@ -5,7 +5,7 @@ import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { parseMsgContract, printableBalance } from "../../../ui-utils";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent } from "../../../ui-utils/txs";
 
 interface Props {
   readonly msg: IMsgExecuteContract;
@@ -13,9 +13,13 @@ interface Props {
 }
 
 export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
-  const event = findEventType(log.events, "wasm")!;
-  const evt = parseContractEvent(event.attributes);
-  const interal = evt.filter(e => e.contract !== msg.contract && e.attributes.find(a => a.key === "action"));
+  const event = findEventType(log.events, "wasm");
+  let internal: ContractEvent[] = [];
+  if (event) {
+    const evt = parseContractEvent(event.attributes);
+    internal = evt.filter(e => e.contract !== msg.contract && e.attributes.find(a => a.key === "action"));
+  }
+
   const instEvent = findEventType(log.events, "instantiate");
   let instContracts: TxAttribute[] = [];
   if (instEvent) {
@@ -58,7 +62,7 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
 
         </li>
       )}
-      {interal.length > 0 && (
+      {internal.length > 0 && (
         <li className="list-group-item">
           <span title="The contract level message" className="font-weight-bold">
             Internal contract calls:
@@ -73,7 +77,7 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
               </tr>
             </thead>
             <tbody>
-              {interal.map((e, index) => (
+              {internal.map((e, index) => (
                 <tr key={e.contract}>
                   <td>{index + 1}</td>
                   <td>{e.attributes.find(a => a.key === "action")?.value}</td>
