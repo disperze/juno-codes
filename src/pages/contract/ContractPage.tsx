@@ -145,7 +145,6 @@ const stargateEffect = (
           gasWanted: tx.result.gasWanted,
       }));
 
-      console.log(txs);
       const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
         const decodedTx = Tx.decode(tx.tx);
         const txExecutions = (decodedTx?.body?.messages ?? [])
