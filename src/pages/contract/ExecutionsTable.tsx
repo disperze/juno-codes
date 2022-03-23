@@ -31,7 +31,8 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
       </thead>
       <tbody>
         {executions.map((execution, _) => {
-          const { action, sender} = getActionSender(execution, contract);
+          const { action, sender, relay } = getExecutionParams(execution, contract);
+          const ibcBadge = relay ? (<span className="badge badge-pill badge-info">relayer</span>): <></>;
 
           if (!action) {
             return <></>
@@ -40,7 +41,7 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
           return (
             <tr key={execution.key}>
               <td>{execution.height}</td>
-              <td>{action}</td>
+              <td>{action} {ibcBadge}</td>
               <td>
                 <TransactionLink transactionId={execution.transactionId} />
               </td>
@@ -69,9 +70,10 @@ function getAction(execution: Execution, contract: string): string|undefined {
   return attrs.length > 0 ? attrs[0].value : "unknown";
 }
 
-function getActionSender(execution: Execution, contract: string) {
+function getExecutionParams(execution: Execution, contract: string) {
   let action;
   let sender;
+  let relay = false;
   if ("contract" in execution.msg) {
     sender = execution.msg.sender;
     if (execution.msg.contract === contract) {
@@ -82,10 +84,12 @@ function getActionSender(execution: Execution, contract: string) {
   } else if ("packet" in execution.msg) {
     action = getAction(execution, contract);
     sender = execution.msg.signer;
+    relay = true;
   }
 
   return {
     action,
     sender,
+    relay,
   }
 }
