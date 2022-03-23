@@ -26,7 +26,16 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
   let internal: ContractEvent[] = [];
   if (event) {
     const evt = parseContractEvent(event.attributes);
-    internal = evt.filter(e => e.contract !== msg.contract && e.attributes.find(a => a.key === "action"));
+    let firstCall = true;
+    internal = evt.filter(e => {
+      if (e.contract === msg.contract && firstCall) {
+        return false;
+      }
+
+      firstCall = false;
+      return e.attributes.find(a => a.key === "action")
+    });
+
   }
 
   const instEvent = findEventType(log.events, "instantiate");
@@ -114,7 +123,7 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
       {internal.length > 0 && (
         <li className="list-group-item">
           <span title="The contract level message" className="font-weight-bold">
-            Internal contract calls:
+            Contract calls:
           </span>
           <p />
           <table className="table">
