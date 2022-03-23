@@ -1,18 +1,19 @@
-import { MsgAcknowledgement } from "cosmjs-types/ibc/core/channel/v1/tx";
+import { MsgRecvPacket } from "cosmjs-types/ibc/core/channel/v1/tx";
 import React, { Fragment } from "react";
 
 import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent } from "../../../ui-utils/txs";
-import { parseAckResult } from "../../../ui-utils";
+import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent, findEventAttributeValue } from "../../../ui-utils/txs";
+import { parseAckResult, parseMsgContract } from "../../../ui-utils";
+import { toUtf8 } from "@cosmjs/encoding";
 
 interface Props {
-  readonly msg: MsgAcknowledgement;
+  readonly msg: MsgRecvPacket;
   readonly log: TxLog;
 }
 
-export function MsgAck({ msg, log }: Props): JSX.Element {
+export function MsgReceive({ msg, log }: Props): JSX.Element {
   const event = findEventType(log.events, "wasm");
   let internal: ContractEvent[] = [];
   if (event) {
@@ -25,6 +26,8 @@ export function MsgAck({ msg, log }: Props): JSX.Element {
   if (instEvent) {
     instContracts = findEventAttributes(instEvent.attributes, "_contract_address");
   }
+
+  const ack = findEventAttributeValue(log.events, "write_acknowledgement", "packet_ack");
 
   return (
     <Fragment>
@@ -50,10 +53,17 @@ export function MsgAck({ msg, log }: Props): JSX.Element {
       </li>
       <li className="list-group-item">
         <span title="The contract level message" className="font-weight-bold">
+          Packet Data
+        </span>
+        :
+        {msg.packet && <JsonView src={parseMsgContract(msg.packet.data)} strLength={100} />}
+      </li>
+      <li className="list-group-item">
+        <span title="The contract level message" className="font-weight-bold">
           Acknowledgement
         </span>
         :
-        <JsonView src={parseAckResult(msg.acknowledgement)} strLength={100} />
+        {ack && <JsonView src={parseAckResult(toUtf8(ack))} strLength={100} />}
       </li>
       {instContracts.length > 0 && (
         <li className="list-group-item">

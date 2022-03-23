@@ -4,6 +4,7 @@ type IAny = Any;
 
 export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 export const msgAckTypeUrl = "/ibc.core.channel.v1.MsgAcknowledgement";
+export const msgReceiveTypeUrl = "/ibc.core.channel.v1.MsgRecvPacket";
 export const msgStoreCodeTypeUrl = "/cosmwasm.wasm.v1.MsgStoreCode";
 export const msgInstantiateContractTypeUrl = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 export const msgExecuteContractTypeUrl = "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -18,6 +19,11 @@ export interface AnyMsgSend {
 
 export interface AnyMsgAcknowledgement {
   readonly typeUrl: "/ibc.core.channel.v1.MsgAcknowledgement";
+  readonly value: Uint8Array;
+}
+
+export interface AnyMsgRecvPacket {
+  readonly typeUrl: "/ibc.core.channel.v1.MsgRecvPacket";
   readonly value: Uint8Array;
 }
 
@@ -57,6 +63,10 @@ export function isAnyMsgSend(msg: IAny): msg is AnyMsgSend {
 
 export function isAnyIbcAck(msg: IAny): msg is AnyMsgAcknowledgement {
   return msg.typeUrl === msgAckTypeUrl && !!msg.value;
+}
+
+export function isAnyIbcReceive(msg: IAny): msg is AnyMsgRecvPacket {
+  return msg.typeUrl === msgReceiveTypeUrl && !!msg.value;
 }
 
 export function isAnyMsgStoreCode(msg: IAny): msg is AnyMsgStoreCode {

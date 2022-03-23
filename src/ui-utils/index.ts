@@ -1,4 +1,4 @@
-import { fromUtf8 } from "@cosmjs/encoding";
+import { fromBase64, fromUtf8 } from "@cosmjs/encoding";
 import { Decimal } from "@cosmjs/math";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
@@ -42,6 +42,25 @@ export function parseMsgContract(msg: Uint8Array): any {
   const json = fromUtf8(msg);
 
   return JSON.parse(json);
+}
+
+export function parseAckResult(ack: Uint8Array): any {
+  const json = fromUtf8(ack);
+  const ackData = JSON.parse(json);
+  if (!ackData.result) {
+    return ackData;
+  }
+
+  try {
+    const jsonResult = fromUtf8(fromBase64(ackData.result));
+    const ackResult = JSON.parse(jsonResult);
+
+    return {
+      result: ackResult,
+    };
+  } catch (e) {
+    return ackData;
+  }
 }
 
 export async function sha256(data: Uint8Array): Promise<string> {
