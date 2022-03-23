@@ -17,6 +17,7 @@ jobs:
           yarn build
         env:
           REACT_APP_BACKEND: uninet
+          GENERATE_SOURCEMAP: false
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
