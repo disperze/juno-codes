@@ -10,6 +10,7 @@ import { ClientContext } from "../../../contexts/ClientContext";
 import { makeTags } from "../../../ui-utils/sdkhelpers";
 import { ErrorState, isErrorState, isLoadingState, loadingState, LoadingState } from "../../../ui-utils/states";
 import { TransactionLink } from "../../../components/TransactionLink";
+import { toUtf8 } from "@cosmjs/encoding";
 
 interface Props {
   readonly msg: IMsgExecuteContract;
@@ -45,6 +46,10 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
   }
 
   const packetEvent = findEventType(log.events, "send_packet");
+  let packetData;
+  if (packetEvent) {
+    packetData = findEventAttributes(packetEvent.attributes, "packet_data")[0].value;
+  }
 
   React.useEffect(() => {
     if (!packetEvent) {
@@ -86,24 +91,6 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
         :
         <JsonView src={parseMsgContract(msg.msg)} strLength={100} />
       </li>
-      {packetEvent && (
-        <li className="list-group-item">
-          <span className="font-weight-bold">IBC Acknowledge Tx:</span>{" "}
-          {isLoadingState(ackTxs) ? (
-              <span>Loading …</span>
-            ) : isErrorState(ackTxs) ? (
-              <span>Error</span>
-            ) : (
-              <ul>
-              {ackTxs?.map((hash) => (
-                <li key={hash}>
-                  <TransactionLink transactionId={hash} maxLength={null} />
-                </li>
-              ))}
-              </ul>
-          )}
-        </li>
-      )}
       {instContracts.length > 0 && (
         <li className="list-group-item">
           <span title="The contract level message" className="font-weight-bold">
@@ -146,6 +133,33 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
               ))}
             </tbody>
           </table>
+        </li>
+      )}
+      {packetData && (
+        <li className="list-group-item">
+          <span title="The contract level message" className="font-weight-bold">
+            IBC Packet data
+          </span>
+          :
+          <JsonView src={parseMsgContract(toUtf8(packetData))} strLength={100} collapsed={true} />
+        </li>
+      )}
+      {packetEvent && (
+        <li className="list-group-item">
+          <span className="font-weight-bold">IBC Acknowledge Tx:</span>{" "}
+          {isLoadingState(ackTxs) ? (
+              <span>Loading …</span>
+            ) : isErrorState(ackTxs) ? (
+              <span>Error</span>
+            ) : (
+              <ul>
+              {ackTxs?.map((hash) => (
+                <li key={hash}>
+                  <TransactionLink transactionId={hash} maxLength={null} />
+                </li>
+              ))}
+              </ul>
+          )}
         </li>
       )}
     </Fragment>
