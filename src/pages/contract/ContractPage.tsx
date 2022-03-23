@@ -46,7 +46,7 @@ type IAnyMsgExecuteContract = {
 export type Result<T> = { readonly result?: T; readonly error?: string };
 
 function isStargateMsgExecuteContract(msg: Any): msg is IAnyMsgExecuteContract {
-  return msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract" && !!msg.value;
+  return (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract" || msg.typeUrl === "/ibc.core.channel.v1.MsgRecvPacket") && !!msg.value;
 }
 
 const getAndSetDetails = (
@@ -91,7 +91,7 @@ const getAndSetInstantiationTxHash = (
 };
 
 function getExecutionFromStargateMsgExecuteContract(typeRegistry: Registry, tx: IndexedTx) {
-  return (msg: IAnyMsgExecuteContract, i: number) => {
+  return (msg: Any, i: number) => {
     const decodedMsg = typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value });
     const log = GetTxLogByIndex(tx.rawLog, i);
 
@@ -128,7 +128,7 @@ const stargateEffect = (
     .catch(() => setBalance(errorState));
 
     tmClient.txSearch({
-      query: `message.module='wasm' AND execute._contract_address='${contractAddress}'`,
+      query: `wasm._contract_address='${contractAddress}'`,
       page: 1,
       per_page: 20,
       order_by: "desc",
@@ -145,6 +145,7 @@ const stargateEffect = (
           gasWanted: tx.result.gasWanted,
       }));
 
+      console.log(txs);
       const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
         const decodedTx = Tx.decode(tx.tx);
         const txExecutions = (decodedTx?.body?.messages ?? [])

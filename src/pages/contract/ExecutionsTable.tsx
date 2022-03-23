@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import React from "react";
 
 import { AccountLink } from "../../components/AccountLink";
@@ -10,7 +9,7 @@ export interface Execution {
   readonly key: string;
   readonly height: number;
   readonly transactionId: string;
-  readonly msg: MsgExecuteContract;
+  readonly msg: any;
   readonly log: TxLog;
 }
 
@@ -32,12 +31,7 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
       </thead>
       <tbody>
         {executions.map((execution, _) => {
-          let action;
-          if (execution.msg.contract === contract) {
-            action = Object.keys(parseMsgContract(execution.msg.msg))[0]
-          } else {
-            action = getAction(execution, contract);
-          }
+          const { action, sender} = getActionSender(execution, contract);
 
           if (!action) {
             return <></>
@@ -51,7 +45,7 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
                 <TransactionLink transactionId={execution.transactionId} />
               </td>
               <td>
-                <AccountLink address={execution.msg.sender} />
+                <AccountLink address={sender} />
               </td>
             </tr>
           )
@@ -61,7 +55,7 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
   );
 }
 
-function getAction(execution:Execution, contract: string): string|undefined {
+function getAction(execution: Execution, contract: string): string|undefined {
   const event = findEventType(execution.log.events, "wasm")!;
   const ctrEvt = parseContractEvent(event.attributes);
   const evt = ctrEvt.find(e => e.contract === contract);
@@ -73,4 +67,25 @@ function getAction(execution:Execution, contract: string): string|undefined {
 
   const attrs = findEventAttributes(evt.attributes, "action");
   return attrs.length > 0 ? attrs[0].value : "unknown";
+}
+
+function getActionSender(execution: Execution, contract: string) {
+  let action;
+  let sender;
+  if ("contract" in execution.msg) {
+    sender = execution.msg.sender;
+    if (execution.msg.contract === contract) {
+      action = Object.keys(parseMsgContract(execution.msg.msg))[0];
+    } else {
+      action = getAction(execution, contract);
+    }
+  } else if ("packet" in execution.msg) {
+    action = getAction(execution, contract);
+    sender = execution.msg.signer;
+  }
+
+  return {
+    action,
+    sender,
+  }
 }
