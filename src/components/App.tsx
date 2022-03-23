@@ -25,12 +25,14 @@ import {
   msgMigrateContractTypeUrl,
   msgMsgUpdateAdminTypeUrl,
   msgMsgClearAdminTypeUrl,
+  msgAckTypeUrl,
 } from "../ui-utils/txs";
 import { FlexibleRouter } from "./FlexibleRouter";
 import { DashboardPage } from "../pages/contract/DashboardPage";
 import { TokenPage } from "../pages/tokens/TokenPage";
 import { CodeDashboardPage } from "../pages/codes/CodeDashboard";
 import { CodesPage } from "../pages/codes/CodesPage";
+import { MsgAcknowledgement } from "cosmjs-types/ibc/core/channel/v1/tx";
 
 const { nodeUrls, contractsUrl } = settings.backend;
 const typeRegistry = new Registry([
@@ -40,6 +42,7 @@ const typeRegistry = new Registry([
   [msgMigrateContractTypeUrl, MsgMigrateContract],
   [msgMsgUpdateAdminTypeUrl, MsgUpdateAdmin],
   [msgMsgClearAdminTypeUrl, MsgClearAdmin],
+  [msgAckTypeUrl, MsgAcknowledgement],
 ]);
 
 export function App(): JSX.Element {

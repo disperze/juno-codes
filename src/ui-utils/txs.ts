@@ -3,6 +3,7 @@ import { Any } from "cosmjs-types/google/protobuf/any";
 type IAny = Any;
 
 export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
+export const msgAckTypeUrl = "/ibc.core.channel.v1.MsgAcknowledgement";
 export const msgStoreCodeTypeUrl = "/cosmwasm.wasm.v1.MsgStoreCode";
 export const msgInstantiateContractTypeUrl = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 export const msgExecuteContractTypeUrl = "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -12,6 +13,11 @@ export const msgMsgClearAdminTypeUrl = "/cosmwasm.wasm.v1.MsgClearAdmin";
 
 export interface AnyMsgSend {
   readonly typeUrl: "/cosmos.bank.v1beta1.MsgSend";
+  readonly value: Uint8Array;
+}
+
+export interface AnyMsgAcknowledgement {
+  readonly typeUrl: "/ibc.core.channel.v1.MsgAcknowledgement";
   readonly value: Uint8Array;
 }
 
@@ -47,6 +53,10 @@ export interface AnyMsgClearAdmin {
 
 export function isAnyMsgSend(msg: IAny): msg is AnyMsgSend {
   return msg.typeUrl === msgSendTypeUrl && !!msg.value;
+}
+
+export function isAnyIbcAck(msg: IAny): msg is AnyMsgAcknowledgement {
+  return msg.typeUrl === msgAckTypeUrl && !!msg.value;
 }
 
 export function isAnyMsgStoreCode(msg: IAny): msg is AnyMsgStoreCode {
