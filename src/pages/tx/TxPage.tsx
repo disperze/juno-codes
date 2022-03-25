@@ -30,6 +30,7 @@ import {
   isAnyMsgClearAdmin,
   isAnyIbcAck,
   isAnyIbcReceive,
+  isAnyIbcTimeout,
 } from "../../ui-utils/txs";
 import { ExecutionInfo } from "./ExecutionInfo";
 import { MsgExecuteContract } from "./msgs/MsgExecuteContract";
@@ -42,6 +43,7 @@ import { MsgUpdateAdmin } from "./msgs/MsgUpdateAdmin";
 import { MsgClearAdmin } from "./msgs/MsgClearAdmin";
 import { MsgAck } from "./msgs/MsgAck";
 import { MsgReceive } from "./msgs/MsgReceive";
+import { MsgIbcTimeout } from "./msgs/MsgIbcTimeout";
 
 const stargateEffect = (
   client: StargateClient,
@@ -194,6 +196,11 @@ export function TxPage(): JSX.Element {
                       />
                     ) : isAnyIbcReceive(msg) ? (
                       <MsgReceive
+                        msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                        log={log}
+                      />
+                    ) : isAnyIbcTimeout(msg) ? (
+                      <MsgIbcTimeout
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
                         log={log}
                       />

@@ -5,6 +5,7 @@ type IAny = Any;
 export const msgSendTypeUrl = "/cosmos.bank.v1beta1.MsgSend";
 export const msgAckTypeUrl = "/ibc.core.channel.v1.MsgAcknowledgement";
 export const msgReceiveTypeUrl = "/ibc.core.channel.v1.MsgRecvPacket";
+export const msgTimeoutTypeUrl = "/ibc.core.channel.v1.MsgTimeout";
 export const msgStoreCodeTypeUrl = "/cosmwasm.wasm.v1.MsgStoreCode";
 export const msgInstantiateContractTypeUrl = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 export const msgExecuteContractTypeUrl = "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -24,6 +25,11 @@ export interface AnyMsgAcknowledgement {
 
 export interface AnyMsgRecvPacket {
   readonly typeUrl: "/ibc.core.channel.v1.MsgRecvPacket";
+  readonly value: Uint8Array;
+}
+
+export interface AnyMsgTimeoutPacket {
+  readonly typeUrl: "/ibc.core.channel.v1.MsgTimeout";
   readonly value: Uint8Array;
 }
 
@@ -67,6 +73,10 @@ export function isAnyIbcAck(msg: IAny): msg is AnyMsgAcknowledgement {
 
 export function isAnyIbcReceive(msg: IAny): msg is AnyMsgRecvPacket {
   return msg.typeUrl === msgReceiveTypeUrl && !!msg.value;
+}
+
+export function isAnyIbcTimeout(msg: IAny): msg is AnyMsgTimeoutPacket {
+  return msg.typeUrl === msgTimeoutTypeUrl && !!msg.value;
 }
 
 export function isAnyMsgStoreCode(msg: IAny): msg is AnyMsgStoreCode {
