@@ -11,6 +11,7 @@ interface Props {
 }
 
 export function InitializationInfo({ contract, instantiationTxHash }: Props): JSX.Element {
+  const ibcBadge = contract.ibcPortId ? (<span className="badge badge-pill badge-info">IBC</span>): <></>;
   return (
     <div className="card mb-3">
       <ul className="list-group list-group-flush">
@@ -27,7 +28,7 @@ export function InitializationInfo({ contract, instantiationTxHash }: Props): JS
           )}
         </li>
         <li className="list-group-item">
-          Label: {contract.label}
+          Label: {contract.label} {ibcBadge}
         </li>
         <li className="list-group-item">
           Creator: <AccountLink address={contract.creator} maxLength={null} />
