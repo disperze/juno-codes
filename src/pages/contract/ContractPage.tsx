@@ -45,7 +45,7 @@ type IAnyMsgExecuteContract = {
 
 export type Result<T> = { readonly result?: T; readonly error?: string };
 
-function isStargateMsgExecuteContract(msg: Any): msg is IAnyMsgExecuteContract {
+function isStargateMsgExecuteContract(msg: Any): boolean {
   return (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract"
   || msg.typeUrl === "/ibc.core.channel.v1.MsgRecvPacket"
   || msg.typeUrl === "/ibc.core.channel.v1.MsgTimeout") && !!msg.value;
@@ -93,7 +93,9 @@ const getAndSetInstantiationTxHash = (
 };
 
 function getExecutionFromStargateMsgExecuteContract(typeRegistry: Registry, tx: IndexedTx) {
-  return (msg: Any, i: number) => {
+  return (data: {any: Any, index: number}) => {
+    const msg = data.any;
+    const i = data.index;
     const decodedMsg = typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value });
     const log = GetTxLogByIndex(tx.rawLog, i);
 
@@ -150,7 +152,8 @@ const stargateEffect = (
       const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
         const decodedTx = Tx.decode(tx.tx);
         const txExecutions = (decodedTx?.body?.messages ?? [])
-          .filter(isStargateMsgExecuteContract)
+          .map((any, i) => ({any, index: i}))
+          .filter((msg) => isStargateMsgExecuteContract(msg.any))
           .map(getExecutionFromStargateMsgExecuteContract(typeRegistry, tx));
         return [...executions, ...txExecutions];
       }, []);
