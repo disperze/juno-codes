@@ -46,7 +46,9 @@ type IAnyMsgExecuteContract = {
 export type Result<T> = { readonly result?: T; readonly error?: string };
 
 function isStargateMsgExecuteContract(msg: Any): msg is IAnyMsgExecuteContract {
-  return (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract" || msg.typeUrl === "/ibc.core.channel.v1.MsgRecvPacket") && !!msg.value;
+  return (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract"
+  || msg.typeUrl === "/ibc.core.channel.v1.MsgRecvPacket"
+  || msg.typeUrl === "/ibc.core.channel.v1.MsgTimeout") && !!msg.value;
 }
 
 const getAndSetDetails = (

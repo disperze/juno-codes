@@ -82,7 +82,8 @@ function getExecutionParams(execution: Execution, contract: string) {
       action = getAction(execution, contract);
     }
   } else if ("packet" in execution.msg) {
-    action = getAction(execution, contract);
+    const timeoutEvent = findEventType(execution.log.events, "timeout_packet");
+    action = timeoutEvent ? "timeout" : getAction(execution, contract);
     sender = execution.msg.signer;
     relay = true;
   }
