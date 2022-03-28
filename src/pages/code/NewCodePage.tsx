@@ -26,7 +26,8 @@ interface UploadResult {
 export function NewCodePage(): JSX.Element {
   const { userAddress, signingClient } = React.useContext(ClientContext);
   const [wasm, setWasm] = React.useState<File | null>();
-  const [memo, setMemo] = React.useState<string>();
+  const [accessType, setAccessType] = React.useState<string>();
+  const [accessAddress, setAccessAddress] = React.useState<string>();
 
   const [executing, setExecuting] = React.useState(false);
   const [executeResponse, setExecuteResponse] = React.useState<Result<UploadResult>>();
@@ -45,20 +46,26 @@ export function NewCodePage(): JSX.Element {
   async function uploadCode(): Promise<void> {
     if (!userAddress || !wasm || !signingClient) return;
 
+    if (accessType === "2" && !accessAddress) {
+      alert('Access address is required');
+      return;
+    }
+
     setExecuting(true);
     setMatchCodes(undefined);
     const wasmBytes = new Uint8Array(await wasm.arrayBuffer());
 
     try {
+      const permissionType =accessType ? parseInt(accessType): AccessType.ACCESS_TYPE_UNSPECIFIED;
       const storeCodeMsg = {
         typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
         value: MsgStoreCode.fromPartial({
           sender: userAddress,
           wasmByteCode: wasmBytes,
-          // instantiatePermission: {
-          //   address: '',
-          //   permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS
-          // }
+          instantiatePermission: {
+            address: accessAddress,
+            permission: permissionType
+          }
         }),
       };
 
@@ -66,7 +73,6 @@ export function NewCodePage(): JSX.Element {
         userAddress,
         [storeCodeMsg],
         calculateFee(30000000, settings.backend.gasPrice),
-        memo
       );
       const parsedLogs = logs.parseRawLog(result.rawLog);
       const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
@@ -138,12 +144,27 @@ export function NewCodePage(): JSX.Element {
                   </div>
                 </li>
                 <li className="list-group-item d-flex align-items-baseline">
-                  <label title="The tx memo">Memo:</label>
-                  <input
-                    className="ml-3 flex-grow-1 form-control"
-                    value={memo}
-                    onChange={(event) => setMemo(event.target.value)}
-                  />
+                  <div className="row" style={{width: "100%"}}>
+                    <div className="col-6">
+                      <label title="The Permission">Permission:</label>
+                      <select
+                        className="flex-grow-1 form-control"
+                        onChange={(event) => setAccessType(event.target.value)}
+                        >
+                        <option>Unspecified</option>
+                        <option value={1}>Everybody</option>
+                        <option value={2}>Only Address</option>
+                        <option value={3}>Nobody</option>
+                      </select>
+                    </div>
+                    {accessType === "2" && (<div className="col-6">
+                      <label title="The address">Address:</label>
+                      <input
+                        className="flex-grow-1 form-control"
+                        onChange={(event) => setAccessAddress(event.target.value)}
+                      />
+                    </div>)}
+                  </div>
                 </li>
                 <div className="list-group-item btn-group">
                   {executing ? (
