@@ -1,7 +1,7 @@
 import "./NewCodePage.css";
 
-import { UploadResult } from "@cosmjs/cosmwasm-stargate";
 import { calculateFee } from "@cosmjs/stargate";
+import * as logs from "@cosmjs/stargate/build/logs";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,13 @@ import { settings } from "../../settings";
 import { sha256 } from "../../ui-utils";
 import { contractService } from "../../services/index"
 import { CodeByHashRespone, Code } from "../../types/code-by-hash";
+import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
+
+interface UploadResult {
+  readonly codeId: number,
+  readonly transactionHash: string,
+}
 
 export function NewCodePage(): JSX.Element {
   const { userAddress, signingClient } = React.useContext(ClientContext);
@@ -43,15 +50,32 @@ export function NewCodePage(): JSX.Element {
     const wasmBytes = new Uint8Array(await wasm.arrayBuffer());
 
     try {
-      const executeResponseResult: UploadResult = await signingClient.upload(
+      const storeCodeMsg = {
+        typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
+        value: MsgStoreCode.fromPartial({
+          sender: userAddress,
+          wasmByteCode: wasmBytes,
+          // instantiatePermission: {
+          //   address: '',
+          //   permission: AccessType.ACCESS_TYPE_ONLY_ADDRESS
+          // }
+        }),
+      };
+
+      const result = await signingClient.signAndBroadcast(
         userAddress,
-        wasmBytes,
+        [storeCodeMsg],
         calculateFee(30000000, settings.backend.gasPrice),
         memo
       );
-      setExecuteResponse({ result: executeResponseResult });
+      const parsedLogs = logs.parseRawLog(result.rawLog);
+      const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
+      setExecuteResponse({ result: {
+        codeId: Number.parseInt(codeIdAttr.value, 10),
+        transactionHash: result.transactionHash,
+      } });
     } catch (error) {
-      setExecuteResponse({ error: `Execute error: ${error.message}` });
+      setExecuteResponse({ error: `Execute error: ${(error as any).message}` });
     }
 
     setExecuting(false);
