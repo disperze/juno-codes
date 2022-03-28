@@ -17,6 +17,7 @@ import { contractService } from "../../services/index"
 import { CodeByHashRespone, Code } from "../../types/code-by-hash";
 import { MsgStoreCode } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { AccessType } from "cosmjs-types/cosmwasm/wasm/v1/types";
+import pako from "pako";
 
 interface UploadResult {
   readonly codeId: number,
@@ -57,11 +58,12 @@ export function NewCodePage(): JSX.Element {
 
     try {
       const permissionType = accessType ? parseInt(accessType): AccessType.ACCESS_TYPE_UNSPECIFIED;
+      const compressed = pako.gzip(wasmBytes, { level: 9 });
       const storeCodeMsg = {
         typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
         value: MsgStoreCode.fromPartial({
           sender: userAddress,
-          wasmByteCode: wasmBytes,
+          wasmByteCode: compressed,
           instantiatePermission: permissionType > 0 ? {
             address: accessAddress,
             permission: permissionType
