@@ -7,16 +7,22 @@ import React, { Fragment } from "react";
 import { AccountLink } from "../../../components/AccountLink";
 import { ellideRight } from "../../../ui-utils";
 import { getFileType } from "./magic";
+import { findEventAttributeValue } from "../../../ui-utils/txs";
+import { Log } from "@cosmjs/stargate/build/logs";
+import { CodeLink } from "../../../components/CodeLink";
 
 interface Props {
   readonly msg: IMsgStoreCode;
+  readonly log: Log;
 }
 
 const permissions = ['UNSPECIFIED', 'NOBODY', 'ONLY_ADDRESS', 'EVERYBODY'];
 
-export function MsgStoreCode({ msg }: Props): JSX.Element {
+export function MsgStoreCode({ msg, log }: Props): JSX.Element {
   const [showAllCode, setShowAllCode] = React.useState<boolean>(false);
 
+  const codeIdValue = findEventAttributeValue(log.events, "store_code", "code_id");
+  const codeId = codeIdValue ? parseInt(codeIdValue) : 0;
   const dataInfo = React.useMemo(() => {
     const data = msg.wasmByteCode ?? new Uint8Array();
     return `${getFileType(data) || "unknown"}; ${data.length} bytes`;
@@ -47,6 +53,10 @@ export function MsgStoreCode({ msg }: Props): JSX.Element {
         ) : (
           <code className="long-inline-code">{msg.wasmByteCode}</code>
         )}
+      </li>
+      <li className="list-group-item">
+        <span className="font-weight-bold">Code ID:</span>{" "}
+        <CodeLink codeId={codeId} text={"#" + codeId} />
       </li>
     </Fragment>
   );

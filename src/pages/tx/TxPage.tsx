@@ -168,7 +168,10 @@ export function TxPage(): JSX.Element {
                     {isAnyMsgSend(msg) ? (
                       <MsgSend msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })} />
                     ) : isAnyMsgStoreCode(msg) ? (
-                      <MsgStoreCode msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })} />
+                      <MsgStoreCode
+                        msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
+                        log={log}
+                      />
                     ) : isAnyMsgInstantiateContract(msg) ? (
                       <MsgInstantiateContract
                         msg={typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value })}
