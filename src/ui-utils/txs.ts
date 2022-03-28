@@ -1,4 +1,5 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
+import { Event, Attribute } from "@cosmjs/stargate/build/logs";
 
 type IAny = Any;
 
@@ -103,11 +104,6 @@ export function isAnyMsgClearAdmin(msg: IAny): msg is AnyMsgClearAdmin {
   return msg.typeUrl === msgMsgClearAdminTypeUrl && !!msg.value;
 }
 
-export interface TxLog {
-  msg_index?: number
-  events: TxEvent[]
-}
-
 export interface TxEvent {
   type: string
   attributes: TxAttribute[]
@@ -123,23 +119,15 @@ export interface ContractEvent {
   attributes: TxAttribute[]
 }
 
-export function GetTxLogByIndex(rawLog:string, index: number): TxLog {
-  const logs:TxLog[] = JSON.parse(rawLog);
-
-  const log = logs.find((log) => log.msg_index === index || (index === 0 && !log.msg_index));
-
-  return log ?? {events: []};
-}
-
-export function findEventType(events: TxEvent[], type: string): TxEvent|undefined {
+export function findEventType(events: readonly Event[], type: string): Event|undefined {
   return events.find((e) => e.type === type);
 }
 
-export function findEventAttributes(attrs: TxAttribute[], key: string): TxAttribute[] {
+export function findEventAttributes(attrs: readonly Attribute[], key: string): Attribute[] {
   return attrs.filter((a) => a.key === key);
 }
 
-export function findEventAttributeValue(events: TxEvent[], type: string, key: string): string|undefined {
+export function findEventAttributeValue(events: readonly Event[], type: string, key: string): string|undefined {
   const event = findEventType(events, type);
 
   if (!event) {
@@ -151,7 +139,7 @@ export function findEventAttributeValue(events: TxEvent[], type: string, key: st
   return attr.length > 0 ? attr[0].value : undefined;
 }
 
-export function parseContractEvent(attrs: TxAttribute[]): ContractEvent[] {
+export function parseContractEvent(attrs: readonly Attribute[]): ContractEvent[] {
   const contracts: ContractEvent[] = []
   let event: ContractEvent|undefined = undefined;
   attrs.forEach(attr => {

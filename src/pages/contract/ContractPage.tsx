@@ -33,10 +33,10 @@ import { Execution, ExecutionsTable } from "./ExecutionsTable";
 import { HistoryInfo } from "./HistoryInfo";
 import { InitializationInfo } from "./InitializationInfo";
 import { QueryContract } from "./QueryContract";
-import { GetTxLogByIndex } from "../../ui-utils/txs";
 import { MigrateContract } from "./MigrateContract";
 import { UpdateContractAdmin } from "./UpdateContractAdmin";
 import { ClearContractAdmin } from "./ClearContractAdmin";
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 
 type IAnyMsgExecuteContract = {
   readonly typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract";
@@ -97,7 +97,8 @@ function getExecutionFromStargateMsgExecuteContract(typeRegistry: Registry, tx: 
     const msg = data.any;
     const i = data.index;
     const decodedMsg = typeRegistry.decode({ typeUrl: msg.typeUrl, value: msg.value });
-    const log = GetTxLogByIndex(tx.rawLog, i);
+    const allLogs = parseRawLog(tx.rawLog);
+    const log = allLogs.find(l => l.msg_index === i)!;
 
     return {
       key: `${tx.hash}_${i}`,

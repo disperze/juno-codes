@@ -3,14 +3,15 @@ import React from "react";
 import { AccountLink } from "../../components/AccountLink";
 import { TransactionLink } from "../../components/TransactionLink";
 import { parseMsgContract } from "../../ui-utils";
-import { findEventAttributes, findEventType, parseContractEvent, TxLog } from "../../ui-utils/txs";
+import { findEventAttributes, findEventType, parseContractEvent } from "../../ui-utils/txs";
+import { Log } from "@cosmjs/stargate/build/logs";
 
 export interface Execution {
   readonly key: string;
   readonly height: number;
   readonly transactionId: string;
   readonly msg: any;
-  readonly log: TxLog;
+  readonly log: Log;
 }
 
 interface Props {

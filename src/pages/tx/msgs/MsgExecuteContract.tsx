@@ -5,16 +5,17 @@ import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { parseMsgContract, printableBalance } from "../../../ui-utils";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType,parseContractEvent, ContractEvent } from "../../../ui-utils/txs";
 import { ClientContext } from "../../../contexts/ClientContext";
 import { makeTags } from "../../../ui-utils/sdkhelpers";
 import { ErrorState, isErrorState, isLoadingState, loadingState, LoadingState } from "../../../ui-utils/states";
 import { TransactionLink } from "../../../components/TransactionLink";
 import { toUtf8 } from "@cosmjs/encoding";
+import { Log, Attribute } from "@cosmjs/stargate/build/logs";
 
 interface Props {
   readonly msg: IMsgExecuteContract;
-  readonly log: TxLog;
+  readonly log: Log;
 }
 
 export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
@@ -40,7 +41,7 @@ export function MsgExecuteContract({ msg, log }: Props): JSX.Element {
   }
 
   const instEvent = findEventType(log.events, "instantiate");
-  let instContracts: TxAttribute[] = [];
+  let instContracts: Attribute[] = [];
   if (instEvent) {
     instContracts = findEventAttributes(instEvent.attributes, "_contract_address");
   }

@@ -6,11 +6,12 @@ import { CodeLink } from "../../../components/CodeLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { parseMsgContract, printableBalance } from "../../../ui-utils";
-import { findEventAttributes, findEventType, TxLog } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType } from "../../../ui-utils/txs";
+import { Log } from "@cosmjs/stargate/build/logs";
 
 interface Props {
   readonly msg: IMsgInstantiateContract;
-  readonly log: TxLog;
+  readonly log: Log;
 }
 
 export function MsgInstantiateContract({ msg, log }: Props): JSX.Element {

@@ -20,7 +20,6 @@ import {
   loadingState,
 } from "../../ui-utils/states";
 import {
-  GetTxLogByIndex,
   isAnyMsgExecuteContract,
   isAnyMsgInstantiateContract,
   isAnyMsgSend,
@@ -44,6 +43,7 @@ import { MsgClearAdmin } from "./msgs/MsgClearAdmin";
 import { MsgAck } from "./msgs/MsgAck";
 import { MsgReceive } from "./msgs/MsgReceive";
 import { MsgIbcTimeout } from "./msgs/MsgIbcTimeout";
+import * as logs from "@cosmjs/stargate/build/logs";
 
 const stargateEffect = (
   client: StargateClient,
@@ -150,9 +150,11 @@ export function TxPage(): JSX.Element {
               <p>Error</p>
             ) : details === undefined ? (
               <p>Transaction not found</p>
-            ) : (
-              Tx.decode(details.tx).body?.messages?.map((msg: any, index: number) => {
-                const log = GetTxLogByIndex(details.rawLog, index);
+            ) : (() => {
+              const allLogs = logs.parseRawLog(details.rawLog);
+              console.log(allLogs);
+              return Tx.decode(details.tx).body?.messages?.map((msg: any, index: number) => {
+                const log = allLogs.find(l => l.msg_index === index)!;
                 return (
                 <div className="card mb-3" key={`${details.hash}_${index}`}>
                   <div className="card-header">
@@ -212,7 +214,8 @@ export function TxPage(): JSX.Element {
                   </ul>
                 </div>
               )})
-            )}
+            }
+            )()}
           </div>
         </div>
 

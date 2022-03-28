@@ -3,11 +3,12 @@ import React, { Fragment } from "react";
 
 import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType,parseContractEvent, ContractEvent } from "../../../ui-utils/txs";
+import { Log, Attribute } from "@cosmjs/stargate/build/logs";
 
 interface Props {
   readonly msg: MsgTimeout;
-  readonly log: TxLog;
+  readonly log: Log;
 }
 
 export function MsgIbcTimeout({ msg, log }: Props): JSX.Element {
@@ -19,7 +20,7 @@ export function MsgIbcTimeout({ msg, log }: Props): JSX.Element {
   }
 
   const instEvent = findEventType(log.events, "instantiate");
-  let instContracts: TxAttribute[] = [];
+  let instContracts: Attribute[] = [];
   if (instEvent) {
     instContracts = findEventAttributes(instEvent.attributes, "_contract_address");
   }

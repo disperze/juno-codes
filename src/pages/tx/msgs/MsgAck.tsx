@@ -4,12 +4,13 @@ import React, { Fragment } from "react";
 import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType,parseContractEvent, ContractEvent } from "../../../ui-utils/txs";
 import { parseAckResult } from "../../../ui-utils";
+import { Log, Attribute } from "@cosmjs/stargate/build/logs";
 
 interface Props {
   readonly msg: MsgAcknowledgement;
-  readonly log: TxLog;
+  readonly log: Log;
 }
 
 export function MsgAck({ msg, log }: Props): JSX.Element {
@@ -21,7 +22,7 @@ export function MsgAck({ msg, log }: Props): JSX.Element {
   }
 
   const instEvent = findEventType(log.events, "instantiate");
-  let instContracts: TxAttribute[] = [];
+  let instContracts: Attribute[] = [];
   if (instEvent) {
     instContracts = findEventAttributes(instEvent.attributes, "_contract_address");
   }

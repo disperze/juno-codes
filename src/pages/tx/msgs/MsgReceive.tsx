@@ -4,13 +4,14 @@ import React, { Fragment } from "react";
 import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
-import { findEventAttributes, findEventType,parseContractEvent, TxLog, TxAttribute, ContractEvent, findEventAttributeValue } from "../../../ui-utils/txs";
+import { findEventAttributes, findEventType,parseContractEvent, TxAttribute, ContractEvent, findEventAttributeValue } from "../../../ui-utils/txs";
 import { parseAckResult, parseMsgContract } from "../../../ui-utils";
+import * as logs from "@cosmjs/stargate/build/logs";
 import { toUtf8 } from "@cosmjs/encoding";
 
 interface Props {
   readonly msg: MsgRecvPacket;
-  readonly log: TxLog;
+  readonly log: logs.Log;
 }
 
 export function MsgReceive({ msg, log }: Props): JSX.Element {
