@@ -56,16 +56,16 @@ export function NewCodePage(): JSX.Element {
     const wasmBytes = new Uint8Array(await wasm.arrayBuffer());
 
     try {
-      const permissionType =accessType ? parseInt(accessType): AccessType.ACCESS_TYPE_UNSPECIFIED;
+      const permissionType = accessType ? parseInt(accessType): AccessType.ACCESS_TYPE_UNSPECIFIED;
       const storeCodeMsg = {
         typeUrl: "/cosmwasm.wasm.v1.MsgStoreCode",
         value: MsgStoreCode.fromPartial({
           sender: userAddress,
           wasmByteCode: wasmBytes,
-          instantiatePermission: {
+          instantiatePermission: permissionType > 0 ? {
             address: accessAddress,
             permission: permissionType
-          }
+          }: undefined,
         }),
       };
 

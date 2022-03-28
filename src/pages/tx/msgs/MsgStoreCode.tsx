@@ -12,6 +12,8 @@ interface Props {
   readonly msg: IMsgStoreCode;
 }
 
+const permissions = ['UNSPECIFIED', 'NOBODY', 'ONLY_ADDRESS', 'EVERYBODY'];
+
 export function MsgStoreCode({ msg }: Props): JSX.Element {
   const [showAllCode, setShowAllCode] = React.useState<boolean>(false);
 
@@ -26,6 +28,13 @@ export function MsgStoreCode({ msg }: Props): JSX.Element {
         <span className="font-weight-bold">Sender:</span>{" "}
         <AccountLink address={msg.sender ?? "-"} maxLength={null} />
       </li>
+      {msg.instantiatePermission && (
+        <li className="list-group-item">
+          <span className="font-weight-bold">Permission:</span>{" "}
+          <span>{permissions[msg.instantiatePermission.permission]}</span>{" "}
+          {msg.instantiatePermission.permission === 2 && <AccountLink address={msg.instantiatePermission.address ?? "-"} maxLength={null} />}
+        </li>
+      )}
       <li className="list-group-item">
         <span className="font-weight-bold">Data:</span> {dataInfo}{" "}
         {!showAllCode ? (
