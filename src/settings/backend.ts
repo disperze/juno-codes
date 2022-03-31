@@ -69,7 +69,7 @@ const juno1Settings: BackendSettings = {
   nodeUrls: ["https://rpc-juno.itastakers.com"],
   denominations: ["ujuno"],
   addressPrefix: "juno",
-  gasPrice: GasPrice.fromString("0.025ujuno"),
+  gasPrice: GasPrice.fromString("0.0025ujuno"),
   keplrChainInfo: {
     rpc: "https://rpc-juno.itastakers.com:443",
     rest: "https://lcd-juno.itastakers.com:443",
