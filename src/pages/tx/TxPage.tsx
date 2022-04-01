@@ -151,10 +151,18 @@ export function TxPage(): JSX.Element {
             ) : details === undefined ? (
               <p>Transaction not found</p>
             ) : (() => {
-              const allLogs = logs.parseRawLog(details.rawLog);
-              console.log(allLogs);
+              const allLogs = parseRawLog(details.rawLog);
+
               return Tx.decode(details.tx).body?.messages?.map((msg: any, index: number) => {
-                const log = allLogs.find(l => l.msg_index === index)!;
+                let log = allLogs.find(l => l.msg_index === index);
+                if (!log) {
+                  log = {
+                    events: [],
+                    msg_index: index,
+                    log: "",
+                  };
+                }
+
                 return (
                 <div className="card mb-3" key={`${details.hash}_${index}`}>
                   <div className="card-header">
@@ -226,4 +234,12 @@ export function TxPage(): JSX.Element {
       </div>
     </div>
   );
+}
+
+function parseRawLog(rawLog: string): readonly logs.Log[] {
+  try {
+    return logs.parseRawLog(rawLog);
+  } catch (error) {
+    return [];
+  }
 }

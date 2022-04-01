@@ -30,7 +30,7 @@ export function ExecutionInfo({ tx, timestamp }: Props): JSX.Element {
           {success ? (
             <span className="text-success">{checkMark}</span>
           ) : (
-            <span className="text-danger" title={"error code: " + tx.code}>
+            <span className="text-danger" title={"error code: " + tx.code + ", message: " + tx.rawLog}>
               {xMark}
             </span>
           )}
