@@ -1,6 +1,6 @@
 import "./NewCodePage.css";
 
-import { calculateFee } from "@cosmjs/stargate";
+import { calculateFee, isDeliverTxFailure, DeliverTxResponse } from "@cosmjs/stargate";
 import * as logs from "@cosmjs/stargate/build/logs";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -76,6 +76,9 @@ export function NewCodePage(): JSX.Element {
         [storeCodeMsg],
         calculateFee(30000000, settings.backend.gasPrice),
       );
+      if (isDeliverTxFailure(result)) {
+        throw new Error(createDeliverTxResponseErrorMessage(result));
+      }
       const parsedLogs = logs.parseRawLog(result.rawLog);
       const codeIdAttr = logs.findAttribute(parsedLogs, "store_code", "code_id");
       setExecuteResponse({ result: {
@@ -265,4 +268,8 @@ export function NewCodePage(): JSX.Element {
       </div>
     </div>
   );
+}
+
+function createDeliverTxResponseErrorMessage(result: DeliverTxResponse): string {
+  return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
