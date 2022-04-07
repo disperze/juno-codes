@@ -67,7 +67,11 @@ function getAction(execution: Execution, contract: string): string|undefined {
     return undefined;
   }
 
-  const attrs = findEventAttributes(evt.attributes, "action");
+  let attrs = findEventAttributes(evt.attributes, "action");
+  if (attrs.length > 0) {
+    return attrs[0].value;
+  }
+  attrs = findEventAttributes(evt.attributes, "method");
   return attrs.length > 0 ? attrs[0].value : "unknown";
 }
 
