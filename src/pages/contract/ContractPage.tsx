@@ -37,12 +37,9 @@ import { MigrateContract } from "./MigrateContract";
 import { UpdateContractAdmin } from "./UpdateContractAdmin";
 import { ClearContractAdmin } from "./ClearContractAdmin";
 import { parseRawLog } from "@cosmjs/stargate/build/logs";
+import Pagination from "../../components/Pagination";
 
-type IAnyMsgExecuteContract = {
-  readonly typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract";
-  readonly value: Uint8Array;
-};
-
+const tx_page_size = 20;
 export type Result<T> = { readonly result?: T; readonly error?: string };
 
 function isStargateMsgExecuteContract(msg: Any): boolean {
@@ -111,14 +108,11 @@ function getExecutionFromStargateMsgExecuteContract(typeRegistry: Registry, tx: 
 }
 
 const stargateEffect = (
-  tmClient: Tendermint34Client,
   client: StargateClient,
   contractAddress: string,
-  typeRegistry: Registry,
   setBalance: (balance: readonly ICoin[] | ErrorState | LoadingState) => void,
   setContractCodeHistory: (contractCodeHistory: readonly ContractCodeHistoryEntry[]) => void,
   setDetails: (details: Contract | ErrorState | LoadingState) => void,
-  setExecutions: (executions: readonly Execution[] | ErrorState | LoadingState) => void,
   setInstantiationTxHash: (instantiationTxHash: string | undefined | ErrorState | LoadingState) => void,
 ) => () => {
   getAndSetContractCodeHistory(client, contractAddress, setContractCodeHistory);
@@ -131,37 +125,48 @@ const stargateEffect = (
       setBalance(filteredBalances);
     })
     .catch(() => setBalance(errorState));
-
-    tmClient.txSearch({
-      query: `wasm._contract_address='${contractAddress}'`,
-      page: 1,
-      per_page: 20,
-      order_by: "desc",
-      prove: true
-    })
-    .then((results) => {
-      const txs = results.txs.map(tx => ({
-          height: tx.height,
-          hash: toHex(tx.hash).toUpperCase(),
-          code: tx.result.code,
-          rawLog: tx.result.log || "",
-          tx: tx.tx,
-          gasUsed: tx.result.gasUsed,
-          gasWanted: tx.result.gasWanted,
-      }));
-
-      const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
-        const decodedTx = Tx.decode(tx.tx);
-        const txExecutions = (decodedTx?.body?.messages ?? [])
-          .map((any, i) => ({any, index: i}))
-          .filter((msg) => isStargateMsgExecuteContract(msg.any))
-          .map(getExecutionFromStargateMsgExecuteContract(typeRegistry, tx));
-        return [...executions, ...txExecutions];
-      }, []);
-      setExecutions(out);
-    })
-    .catch(() => setExecutions(errorState));
 };
+
+const loadTxs = (
+  page: number,
+  tmClient: Tendermint34Client,
+  typeRegistry: Registry,
+  contractAddress: string,
+  setExecutions: (executions: readonly Execution[] | ErrorState | LoadingState) => void,
+  setTotalTxs: (totalCount: number) => void,
+) => {
+  tmClient.txSearch({
+    query: `wasm._contract_address='${contractAddress}'`,
+    page: page,
+    per_page: tx_page_size,
+    order_by: "desc",
+    prove: true
+  })
+  .then((results) => {
+
+    const txs = results.txs.map(tx => ({
+        height: tx.height,
+        hash: toHex(tx.hash).toUpperCase(),
+        code: tx.result.code,
+        rawLog: tx.result.log || "",
+        tx: tx.tx,
+        gasUsed: tx.result.gasUsed,
+        gasWanted: tx.result.gasWanted,
+    }));
+
+    const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
+      const decodedTx = Tx.decode(tx.tx);
+      const txExecutions = (decodedTx?.body?.messages ?? [])
+        .map((any, i) => ({any, index: i}))
+        .filter((msg) => isStargateMsgExecuteContract(msg.any))
+        .map(getExecutionFromStargateMsgExecuteContract(typeRegistry, tx));
+      return [...executions, ...txExecutions];
+    }, []);
+    setTotalTxs(results.totalCount);
+    setExecutions(out);
+  })
+  .catch(() => setExecutions(errorState));
+}
 
 export function ContractPage(): JSX.Element {
   const { client, typeRegistry, nodeUrl } = React.useContext(ClientContext);
@@ -179,6 +184,7 @@ export function ContractPage(): JSX.Element {
   const [executions, setExecutions] = React.useState<readonly Execution[] | ErrorState | LoadingState>(
     loadingState,
   );
+  const [totalTxs, setTotalTxs] = React.useState<number>(0);
   const [tmClient, setTmclient] = useState<Tendermint34Client>();
 
   React.useEffect(() => {
@@ -191,21 +197,33 @@ export function ContractPage(): JSX.Element {
   }, [tmClient, nodeUrl]);
 
   React.useEffect(
-    client !== null && tmClient
+    client !== null
       ? stargateEffect(
-          tmClient,
           client,
           contractAddress,
-          typeRegistry,
           setBalance,
           setContractCodeHistory,
           setDetails,
-          setExecutions,
           setInstantiationTxHash,
         )
       : () => {},
-    [client, tmClient, contractAddress, typeRegistry],
+    [client, contractAddress],
   );
+
+  React.useEffect(() => {
+    if (tmClient) {
+      loadTxs(1, tmClient, typeRegistry, contractAddress, setExecutions, setTotalTxs);
+    }
+  }, [client, tmClient, contractAddress, typeRegistry]);
+
+  const handlePage = (page: number) => {
+    if (!tmClient) {
+      return;
+    }
+    setExecutions(loadingState)
+
+    loadTxs(page, tmClient, typeRegistry, contractAddress, setExecutions, setTotalTxs);
+  };
 
   const pageTitle = <span title={contractAddress}>Contract {ellideMiddle(contractAddress, 15)}</span>;
 
@@ -370,6 +388,7 @@ export function ContractPage(): JSX.Element {
             ) : (
               <p>Contract was not yet executed</p>
             )}
+            <Pagination totalItems={totalTxs} step={tx_page_size} onChangePage={handlePage} />
           </div>
         </div>
 
