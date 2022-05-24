@@ -24,6 +24,7 @@ import {
   msgMsgUpdateAdminTypeUrl,
   msgMsgClearAdminTypeUrl,
 } from "./txs";
+import { CosmoStationDirectSigner } from "./cosmostation";
 
 export { StargateClient, StargateSigningClient };
 
@@ -48,6 +49,34 @@ export function loadKeplrWallet(client: StargateClient, keplrChainInfo: any): Wa
     };
 
     return w.getOfflineSignerAuto(chaindId);
+  };
+}
+
+export function loadCosmostationWallet(chainInfo: any): WalletLoaderDirect {
+  const w = window as any;
+  if (!w.cosmostation) {
+    throw new Error("Please install cosmostation wallet");
+  }
+
+  return async () => {
+    const supportedChains = await w.cosmostation.tendermint.request({
+      method: "ten_supportedChainNames",
+    });
+
+    if (!supportedChains.official.includes(chainInfo.chainName) && !supportedChains.unofficial.includes(chainInfo.chainName)) {
+      await w.cosmostation.tendermint.request({
+        method: "ten_addChain",
+        params: chainInfo,
+      });
+    }
+
+    // Enable
+    await w.cosmostation.tendermint.request({
+      method: "ten_requestAccount",
+      params: { chainName: chainInfo.chainName },
+    });
+
+    return new CosmoStationDirectSigner(chainInfo);
   };
 }
 

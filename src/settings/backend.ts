@@ -8,6 +8,7 @@ export interface BackendSettings {
   readonly addressPrefix: string;
   readonly gasPrice: GasPrice;
   readonly keplrChainInfo?: any;
+  readonly cosmostationInfo?: any;
   readonly contractsUrl?: string;
 }
 
@@ -26,7 +27,7 @@ const uniSettings: BackendSettings = {
   keplrChainInfo: {
     rpc: "https://rpc.juno.giansalex.dev:443",
     rest: "https://lcd.juno.giansalex.dev:443",
-    chainId: "uni-2",
+    chainId: "uni-3",
     chainName: "Juno Testnet",
     stakeCurrency: {
       coinDenom: "JUNOX",
@@ -58,9 +59,24 @@ const uniSettings: BackendSettings = {
         coinDecimals: 6,
       },
     ],
-    features: ["stargate", "ibc-transfer", "cosmwasm", "no-legacy-stdTx", "ibc-go"],
+    features: ["ibc-transfer", "cosmwasm", "ibc-go"],
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
 
+  },
+  cosmostationInfo: {
+    chainId: "uni-3",
+    chainName: "juno-uni",
+    addressPrefix: "juno",
+    baseDenom: "ujunox",
+    displayDenom: "JUNOX",
+    restURL: "https://api-office.cosmostation.io/uni-3",
+    coinType: "118",
+    decimals: 6,
+    gasRate: {
+      average: "0.05",
+      low: "0.025",
+      tiny: "0.025",
+    },
   },
   contractsUrl: "https://graph.juno.giansalex.dev/api/rest/v2.0/"
 };
