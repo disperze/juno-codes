@@ -81,6 +81,53 @@ const uniSettings: BackendSettings = {
   contractsUrl: "https://graph.juno.giansalex.dev/api/rest/v2.0/"
 };
 
+const osmotSetting: BackendSettings = {
+  nodeUrls: ["https://testnet-rpc.osmosis.zone/"],
+  denominations: ["uosmo"],
+  addressPrefix: "osmo",
+  gasPrice: GasPrice.fromString("0.0025uosmo"),
+  keplrChainInfo: {
+    rpc: "https://testnet-rpc.osmosis.zone:443",
+    rest: "https://testnet-rest.osmosis.zone:443",
+    chainId: "osmo-test-4",
+    chainName: "Osmosis Testnet",
+    stakeCurrency: {
+      coinDenom: "OSMO",
+      coinMinimalDenom: "uosmo",
+      coinDecimals: 6,
+    },
+    bip44: {
+      coinType: 118,
+    },
+    bech32Config: {
+      bech32PrefixAccAddr: "osmo",
+      bech32PrefixAccPub: "osmopub",
+      bech32PrefixValAddr: "osmovaloper",
+      bech32PrefixValPub: "osmovaloperpub",
+      bech32PrefixConsAddr: "osmovalcons",
+      bech32PrefixConsPub: "osmovalconspub",
+    },
+    currencies: [
+      {
+        coinDenom: "OSMO",
+        coinMinimalDenom: "uosmo",
+        coinDecimals: 6,
+      },
+    ],
+    feeCurrencies: [
+      {
+        coinDenom: "OSMO",
+        coinMinimalDenom: "uosmo",
+        coinDecimals: 6,
+      },
+    ],
+    features: ["ibc-transfer", "cosmwasm", "ibc-go"],
+    explorerUrlToTx: "",
+
+  },
+  contractsUrl: ""
+};
+
 const juno1Settings: BackendSettings = {
   nodeUrls: ["https://rpc-juno.itastakers.com"],
   denominations: ["ujuno"],
@@ -132,6 +179,7 @@ const knownBackends: Partial<Record<string, BackendSettings>> = {
   devnetStargate: devnetStargateSettings,
   uninet: uniSettings,
   juno1: juno1Settings,
+  osmot: osmotSetting,
 };
 
 export function getCurrentBackend(): BackendSettings {
