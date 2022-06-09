@@ -157,9 +157,9 @@ export function NewCodePage(): JSX.Element {
                         onChange={(event) => setAccessType(event.target.value)}
                         >
                         <option>Unspecified</option>
-                        <option value={1}>Everybody</option>
+                        <option value={1}>Nobody</option>
                         <option value={2}>Only Address</option>
-                        <option value={3}>Nobody</option>
+                        <option value={3}>Everybody</option>
                       </select>
                     </div>
                     {accessType === "2" && (<div className="col-6">
