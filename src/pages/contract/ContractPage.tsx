@@ -140,7 +140,7 @@ const loadTxs = (
     page: page,
     per_page: tx_page_size,
     order_by: "desc",
-    prove: true
+    prove: false
   })
   .then((results) => {
 
