@@ -77,7 +77,7 @@ const uniSettings: BackendSettings = {
       tiny: "0.025",
     },
   },
-  contractsUrl: ""
+  contractsUrl: "https://graph.juno.giansalex.dev/api/rest/v2.0/"
 };
 
 const osmotSetting: BackendSettings = {
