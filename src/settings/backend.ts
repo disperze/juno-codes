@@ -20,14 +20,14 @@ const devnetStargateSettings: BackendSettings = {
 };
 
 const uniSettings: BackendSettings = {
-  nodeUrls: ["https://rpc.uni.junonetwork.io"],
+  nodeUrls: ["https://rpc.juno.giansalex.dev"],
   denominations: ["ujunox"],
   addressPrefix: "juno",
-  gasPrice: GasPrice.fromString("0.025ujunox"),
+  gasPrice: GasPrice.fromString("0.001ujunox"),
   keplrChainInfo: {
-    rpc: "https://rpc.uni.junonetwork.io",
-    rest: "https://api.uni.junonetwork.io",
-    chainId: "uni-3",
+    rpc: "https://rpc.juno.giansalex.dev",
+    rest: "https://lcd.juno.giansalex.dev",
+    chainId: "uni-5",
     chainName: "Juno Testnet",
     stakeCurrency: {
       coinDenom: "JUNOX",
@@ -59,9 +59,8 @@ const uniSettings: BackendSettings = {
         coinDecimals: 6,
       },
     ],
-    features: ["ibc-transfer", "cosmwasm", "ibc-go"],
+    features: ["cosmwasm", "ibc-transfer", "ibc-go", "wasmd_0.24+"],
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
-
   },
   cosmostationInfo: {
     chainId: "uni-3",
@@ -69,7 +68,7 @@ const uniSettings: BackendSettings = {
     addressPrefix: "juno",
     baseDenom: "ujunox",
     displayDenom: "JUNOX",
-    restURL: "https://api-office.cosmostation.io/uni-3",
+    restURL: "https://api-office.cosmostation.io/uni-5",
     coinType: "118",
     decimals: 6,
     gasRate: {
