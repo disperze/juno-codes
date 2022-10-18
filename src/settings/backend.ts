@@ -63,7 +63,7 @@ const uniSettings: BackendSettings = {
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
   },
   cosmostationInfo: {
-    chainId: "uni-3",
+    chainId: "uni-5",
     chainName: "juno-uni",
     addressPrefix: "juno",
     baseDenom: "ujunox",
@@ -73,7 +73,7 @@ const uniSettings: BackendSettings = {
     decimals: 6,
     gasRate: {
       average: "0.05",
-      low: "0.025",
+      low: "0.00",
       tiny: "0.025",
     },
   },
