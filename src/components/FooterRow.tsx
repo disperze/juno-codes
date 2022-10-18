@@ -61,7 +61,7 @@ export function FooterRow(): JSX.Element {
             Node info
           </button>
           <Separator />
-          <a href="https://github.com/CosmWasm/code-explorer" style={whiteText}>
+          <a href="https://github.com/disperze/juno-codes" style={whiteText}>
             Fork me on GitHub
           </a>
         </div>
