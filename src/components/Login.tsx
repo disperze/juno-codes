@@ -4,6 +4,7 @@ import { ClientContext } from "../contexts/ClientContext";
 import { settings } from "../settings";
 import {
   getAddressAndStargateSigningClient,
+  loadCosmostationWallet,
   loadKeplrWallet,
   loadLedgerWallet,
   WalletLoaderDirect,
@@ -37,16 +38,27 @@ export function Login(): JSX.Element {
   }
 
   function renderLoginButton(): JSX.Element {
-    const { keplrChainInfo } = settings.backend;
+    const { keplrChainInfo, cosmostationInfo } = settings.backend;
 
-    let keplrButton;
-    if (keplrChainInfo !== undefined && client !== null) {
+    let keplrButton, cosmostationButton;
+    if (keplrChainInfo && client) {
       keplrButton = (
         <button
           className="dropdown-item"
           onClick={async () => loginStargate(loadKeplrWallet(client, keplrChainInfo))}
         >
           Keplr wallet
+        </button>
+      );
+    }
+
+    if (cosmostationInfo) {
+      cosmostationButton = (
+        <button
+          className="dropdown-item"
+          onClick={async () => loginStargate(loadCosmostationWallet(cosmostationInfo))}
+        >
+          Cosmostation
         </button>
       );
     }
@@ -70,6 +82,7 @@ export function Login(): JSX.Element {
         <div className="dropdown-menu">
           <h6 className="dropdown-header">with</h6>
           {keplrButton}
+          {cosmostationButton}
           <button
             className="dropdown-item"
             onClick={() => loginStargate(loadLedgerWallet)}
