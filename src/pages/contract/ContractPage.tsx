@@ -152,7 +152,7 @@ const loadTxs = (
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,
         gasWanted: tx.result.gasWanted,
-    }));
+    } as IndexedTx));
 
     const out = txs.reduce((executions: readonly Execution[], tx: IndexedTx): readonly Execution[] => {
       const decodedTx = Tx.decode(tx.tx);
