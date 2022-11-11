@@ -52,7 +52,8 @@ const typeRegistry = new Registry([
 ]);
 
 export function App(): JSX.Element {
-  const [nodeUrl, setNodeUrl] = React.useState(nodeUrls[0]);
+  const rndUrl = Math.floor(Math.random()*nodeUrls.length)
+  const [nodeUrl, setNodeUrl] = React.useState(nodeUrls[rndUrl]);
   const [userAddress, setUserAddress] = React.useState<string>();
   const [signingClient, setSigningClient] = React.useState<StargateSigningClient>();
   const [contextValue, setContextValue] = React.useState<ClientContextValue>({
