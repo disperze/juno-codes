@@ -1,8 +1,8 @@
 import { makeCosmoshubPath, OfflineAminoSigner } from "@cosmjs/amino";
 import {
-  CosmWasmClient as StargateClient,
   SigningCosmWasmClient as StargateSigningClient,
 } from "@cosmjs/cosmwasm-stargate";
+import { CustomStargateClient as StargateClient } from "./stargate-client";
 import {
   MsgExecuteContract,
   MsgInstantiateContract,
