@@ -1,5 +1,5 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
-import { Event, Attribute } from "@cosmjs/stargate/build/logs";
+import { Event, Attribute } from "@cosmjs/stargate/build/events";
 
 type IAny = Any;
 

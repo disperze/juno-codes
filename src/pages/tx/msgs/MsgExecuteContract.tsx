@@ -11,7 +11,8 @@ import { makeTags } from "../../../ui-utils/sdkhelpers";
 import { ErrorState, isErrorState, isLoadingState, loadingState, LoadingState } from "../../../ui-utils/states";
 import { TransactionLink } from "../../../components/TransactionLink";
 import { toUtf8 } from "@cosmjs/encoding";
-import { Log, Attribute } from "@cosmjs/stargate/build/logs";
+import { Log } from "@cosmjs/stargate/build/logs";
+import { Attribute } from "@cosmjs/stargate/build/events";
 
 interface Props {
   readonly msg: IMsgExecuteContract;

@@ -6,7 +6,8 @@ import { ContractLink } from "../../../components/ContractLink";
 import { JsonView } from "../../../components/JsonView";
 import { findEventAttributes, findEventType,parseContractEvent, ContractEvent } from "../../../ui-utils/txs";
 import { parseAckResult } from "../../../ui-utils";
-import { Log, Attribute } from "@cosmjs/stargate/build/logs";
+import { Log } from "@cosmjs/stargate/build/logs";
+import { Attribute } from "@cosmjs/stargate/build/events";
 
 interface Props {
   readonly msg: MsgAcknowledgement;

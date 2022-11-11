@@ -4,7 +4,8 @@ import React, { Fragment } from "react";
 import { AccountLink } from "../../../components/AccountLink";
 import { ContractLink } from "../../../components/ContractLink";
 import { findEventAttributes, findEventType,parseContractEvent, ContractEvent } from "../../../ui-utils/txs";
-import { Log, Attribute } from "@cosmjs/stargate/build/logs";
+import { Log } from "@cosmjs/stargate/build/logs";
+import { Attribute } from "@cosmjs/stargate/build/events";
 
 interface Props {
   readonly msg: MsgTimeout;
