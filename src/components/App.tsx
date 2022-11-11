@@ -18,6 +18,8 @@ import { ContractPage } from "../pages/contract/ContractPage";
 import { TxPage } from "../pages/tx/TxPage";
 import { settings } from "../settings";
 import { StargateClient, StargateSigningClient } from "../ui-utils/clients";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { HttpBatchClient } from "@cosmjs/tendermint-rpc/build/rpcclients";
 import {
   msgExecuteContractTypeUrl,
   msgInstantiateContractTypeUrl,
@@ -66,7 +68,11 @@ export function App(): JSX.Element {
 
   React.useEffect(() => {
     (async function updateContextValue() {
-      const client = await StargateClient.connect(nodeUrl);
+      const tmClient =  await Tendermint34Client.create(new HttpBatchClient(nodeUrl, {
+        batchSizeLimit: 20,
+        dispatchInterval: 50,
+      }));
+      const client = StargateClient.connectWithTm(tmClient);
       setContextValue((prevContextValue) => ({ ...prevContextValue, nodeUrl: nodeUrl, client: client }));
     })();
   }, [nodeUrl]);
