@@ -74,7 +74,7 @@ export function NewCodePage(): JSX.Element {
       const result = await signingClient.signAndBroadcast(
         userAddress,
         [storeCodeMsg],
-        calculateFee(30000000, settings.backend.gasPrice),
+        calculateFee(8000000, settings.backend.gasPrice),
       );
       if (isDeliverTxFailure(result)) {
         throw new Error(createDeliverTxResponseErrorMessage(result));
