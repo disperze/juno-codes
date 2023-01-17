@@ -27,6 +27,9 @@ export function Header(): JSX.Element {
           <li className="nav-item active">
             <Link className="nav-link" to={`/codes`}>Codes</Link>
           </li>
+          <li className="nav-item active">
+            <Link className="nav-link" to={`/contract/tools`}>Tools</Link>
+          </li>
         </ul>
         <div className="form-inline my-2">
           {settings.backend.keplrChainInfo && (<span className="badge badge-warning network-badge">{settings.backend.keplrChainInfo?.chainId}</span>)}
