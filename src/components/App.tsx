@@ -37,6 +37,7 @@ import { TokenPage } from "../pages/tokens/TokenPage";
 import { CodeDashboardPage } from "../pages/codes/CodeDashboard";
 import { CodesPage } from "../pages/codes/CodesPage";
 import { MsgAcknowledgement, MsgRecvPacket, MsgTimeout } from "cosmjs-types/ibc/core/channel/v1/tx";
+import { ToolsPage } from "../pages/contract/ToolsPage";
 
 const { nodeUrls, contractsUrl } = settings.backend;
 const typeRegistry = new Registry([
@@ -95,6 +96,7 @@ export function App(): JSX.Element {
             <Route exact path="/tokens" component={TokenPage} />
             <Route path="/codes/new" component={NewCodePage} />
             <Route path="/codes/:codeId" component={CodePage} />
+            <Route path="/contract/tools" component={ToolsPage} />
             <Route path="/contracts/:contractAddress" component={ContractPage} />
             <Route path="/transactions/:txId" component={TxPage} />
             <Route path="/accounts/:address" component={AccountPage} />
@@ -105,6 +107,7 @@ export function App(): JSX.Element {
             <Route exact path="/codes" component={CodesPage} />
             <Route path="/codes/new" component={NewCodePage} />
             <Route path="/codes/:codeId" component={CodePage} />
+            <Route path="/contract/tools" component={ToolsPage} />
             <Route path="/contracts/:contractAddress" component={ContractPage} />
             <Route path="/transactions/:txId" component={TxPage} />
             <Route path="/accounts/:address" component={AccountPage} />
