@@ -102,7 +102,7 @@ export function ExecuteContract({ contractAddress }: Props): JSX.Element {
             </button>
           )}
         </div>
-        {executeResponse?.result ? (
+        {!executing && executeResponse?.result ? (
           <li className="list-group-item">
             <span title="The contract formatted input">Response:</span>
             <JsonView src={executeResponse.result} />
