@@ -7,9 +7,7 @@ import { ClientContext } from "../../contexts/ClientContext";
 import { jsonInputStyle } from "../../ui-utils/jsonInput";
 import { Result } from "./ContractPage";
 
-const migratePlaceholder = {
-  payout: "juno14vhcdsyf83ngsrrqc92kmw8q9xakqjm0ff2dpn",
-};
+const migratePlaceholder = {};
 
 interface Props {
   readonly contractAddress: string;
