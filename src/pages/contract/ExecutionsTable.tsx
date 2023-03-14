@@ -58,7 +58,10 @@ export function ExecutionsTable({ executions, contract }: Props): JSX.Element {
 }
 
 function getAction(execution: Execution, contract: string): string|undefined {
-  const event = findEventType(execution.log.events, "wasm")!;
+  const event = findEventType(execution.log.events, "wasm");
+  if (!event) {
+    return undefined;
+  }
   const ctrEvt = parseContractEvent(event.attributes);
   const evt = ctrEvt.find(e => e.contract === contract);
 
