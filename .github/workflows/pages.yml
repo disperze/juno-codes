@@ -18,6 +18,7 @@ jobs:
         env:
           REACT_APP_BACKEND: uninet
           GENERATE_SOURCEMAP: false
+          NODE_OPTIONS: '--openssl-legacy-provider'
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2

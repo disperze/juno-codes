@@ -41,12 +41,12 @@ export function loadKeplrWallet(client: StargateClient, keplrChainInfo: any): Wa
     const w = window as any;
     await w.keplr.enable(chaindId);
 
-    w.keplr.defaultOptions = {
-      sign: {
-        preferNoSetFee: true,
-        preferNoSetMemo: false,
-      }
-    };
+   // w.keplr.defaultOptions = {
+   //   sign: {
+   //     preferNoSetFee: true,
+   //     preferNoSetMemo: false,
+   //   }
+   //};
 
     return w.getOfflineSignerAuto(chaindId);
   };
