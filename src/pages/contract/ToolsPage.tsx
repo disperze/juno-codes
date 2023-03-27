@@ -12,7 +12,6 @@ export function ToolsPage(): JSX.Element {
   const [checkSum, setChecksum] = React.useState<string>();
   const [creator, setCreator] = React.useState<string>();
   const [salt, setSalt] = React.useState<string>();
-  const [msg, setMsg] = React.useState<string>();
 
   const [executeResponse, setExecuteResponse] = React.useState<string>();
   const [error, setError] = React.useState<string>();
@@ -20,7 +19,7 @@ export function ToolsPage(): JSX.Element {
   async function calculateAddress(): Promise<void> {
     if (!checkSum || !creator || !salt) return;
 
-    const message = !msg ? null : msg;
+    const message = null;
     try {
       const address = instantiate2Address(fromHex(checkSum), creator, toUtf8(salt), message, settings.backend.addressPrefix);
       setExecuteResponse(address);
@@ -72,16 +71,6 @@ export function ToolsPage(): JSX.Element {
                       <label title="Creator">Creator:</label>
                       <input type="text" className="form-control"
                         onChange={(event) => setCreator(event.target.value)}
-                      />
-                    </div>
-                  </div>
-                </li>
-                <li className="list-group-item d-flex align-items-baseline">
-                  <div className="row" style={{width: "100%"}}>
-                    <div className="col-6">
-                      <label title="Message">Msg:</label>
-                      <input type="text" className="form-control"
-                        onChange={(event) => setMsg(event.target.value)}
                       />
                     </div>
                   </div>
