@@ -27,7 +27,7 @@ const uniSettings: BackendSettings = {
   keplrChainInfo: {
     rpc: "https://rpc.uni.junonetwork.io",
     rest: "https://api.uni.junonetwork.io",
-    chainId: "uni-5",
+    chainId: "uni-6",
     chainName: "Juno Testnet",
     stakeCurrency: {
       coinDenom: "JUNOX",
@@ -63,7 +63,7 @@ const uniSettings: BackendSettings = {
     explorerUrlToTx: "https://uni.junoscan.com/transactions/{txHash}",
   },
   cosmostationInfo: {
-    chainId: "uni-5",
+    chainId: "uni-6",
     chainName: "juno-uni",
     addressPrefix: "juno",
     baseDenom: "ujunox",
